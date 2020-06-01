@@ -61,6 +61,7 @@ export default {
 
   .search-section {
     padding: 12px 10px;
+    height: 54px;
 
     .search-input-wrapper {
       background-color: rgba(0, 0, 0, .1);
