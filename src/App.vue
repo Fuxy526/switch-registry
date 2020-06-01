@@ -12,5 +12,6 @@
 body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   margin: 0;
+  user-select: none;
 }
 </style>
