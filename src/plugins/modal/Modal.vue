@@ -1,25 +1,29 @@
 <template>
   <div class="modal" v-show="show">
-    <div class="modal-overlay" @click="handleOverlayClick"></div>
-    <div class="modal-box">
-      <div class="modal-header">
-        <div class="title">{{ title }}</div>
-        <button class="close-btn" @click="handleClose">
-          <i class="icon-close"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="content">{{ content }}</div>
-        <div class="description">{{ description }}</div>
-        <div class="input-wrapper" v-show="prompt">
-          <input class="input" ref="input" type="text" v-model="promptValue" :placeholder="placeholder" @keyup.enter="handleConfirm" />
+    <transition name="fade">
+      <div class="modal-overlay" @click="handleOverlayClick" v-show="show"></div>
+    </transition>
+    <transition name="popup">
+      <div class="modal-box" v-show="show">
+        <div class="modal-header">
+          <div class="title">{{ title }}</div>
+          <button class="close-btn" @click="handleClose">
+            <i class="icon-close"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="content">{{ content }}</div>
+          <div class="description">{{ description }}</div>
+          <div class="input-wrapper" v-show="prompt">
+            <input class="input" ref="input" type="text" v-model="promptValue" :placeholder="placeholder" @keyup.enter="handleConfirm" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn cancel-btn" @click="handleCancel">{{ cancelButtonText }}</button>
+          <button class="btn confirm-btn" @click="handleConfirm" v-show="confirmButtonText">{{ confirmButtonText }}</button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button class="btn cancel-btn" @click="handleCancel">{{ cancelButtonText }}</button>
-        <button class="btn confirm-btn" @click="handleConfirm" v-show="confirmButtonText">{{ confirmButtonText }}</button>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -40,6 +44,7 @@ export default {
       prompt: false,
       promptValue: '',
       placeholder: '',
+      overlayClosable: false,
     };
   },
 
@@ -77,7 +82,9 @@ export default {
     },
 
     handleOverlayClick() {
-      this.show = false;
+      if (this.overlayClosable) {
+        this.show = false;
+      }
     },
 
     handleClose() {
@@ -113,7 +120,7 @@ export default {
     background-color: #F1F5F9;
     width: 360px;
     min-height: 180px;
-    border-radius: 4px;
+    border-radius: 2px;
     overflow: hidden;
 
     .modal-header {
@@ -231,5 +238,29 @@ export default {
       }
     }
   }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: all .2s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-to, .fade-leave {
+  opacity: 1;
+}
+
+.popup-enter-active, .popup-leave-active {
+  transition: all .2s;
+}
+
+.popup-enter, .popup-leave-to {
+  transform: scale(0);
+}
+
+.popup-enter-to, .popup-leave {
+  transform: scale(1);
 }
 </style>
