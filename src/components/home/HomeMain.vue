@@ -3,28 +3,28 @@
     <div class="home-main-wrapper">
       <div class="title-bar">
         <span class="title">{{ name }}</span>
-        <span :class="['status', active ? 'status-active' : '']">
+        <span :class="['status', open ? 'status-open' : '']">
           <i class="status-dot"></i>
-          <span class="status-text">{{ active ? 'active' : 'closed' }}</span>
+          <span class="status-text">{{ open ? 'open' : 'closed' }}</span>
         </span>
       </div>
 
       <div class="content">
         <div class="form-group">
           <label class="label">REGISTRY PATH</label>
-          <input class="input" type="text" v-model="registryPath" />
+          <input class="input" type="text" :value="registryPath" @change="handleRegistryPathChange" />
         </div>
         <div class="form-group">
           <label class="label">REGISTRY KEY</label>
-          <input class="input" type="text" v-model="registryKey" />
+          <input class="input" type="text" :value="registryKey" @change="handleRegistryKeyChange" />
         </div>
         <div class="form-group">
           <label class="label">DEFAULT VALUE</label>
-          <input class="input" type="text" v-model="defaultValue" />
+          <input class="input" type="text" :value="defaultValue" @change="handleDefaultValueChange" />
         </div>
         <div class="form-group">
           <label class="label">TARGET VALUE</label>
-          <input class="input" type="text" v-model="targetValue" />
+          <input class="input" type="text" :value="targetValue" @change="handleTargetValueChange" />
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@ export default {
       type: String,
       default: '',
     },
-    active: {
+    open: {
       type: Boolean,
       default: true,
     },
@@ -61,6 +61,24 @@ export default {
       default: '',
     },
   },
+
+  methods: {
+    handleRegistryPathChange(e) {
+      this.$emit('dataChange', 'registry_path', e.target.value);
+    },
+
+    handleRegistryKeyChange(e) {
+      this.$emit('dataChange', 'registry_key', e.target.value);
+    },
+
+    handleDefaultValueChange(e) {
+      this.$emit('dataChange', 'default_value', e.target.value);
+    },
+
+    handleTargetValueChange(e) {
+      this.$emit('dataChange', 'target_value', e.target.value);
+    },
+  },
 };
 </script>
 
@@ -79,6 +97,7 @@ export default {
     padding: 0 20px;
     height: 54px;
     line-height: 54px;
+    border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
 
     .title {
@@ -108,7 +127,7 @@ export default {
       }
     }
 
-    .status-active {
+    .status-open {
       .status-dot {
         background-color: #31C48D;
       }

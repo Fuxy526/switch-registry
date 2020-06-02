@@ -4,18 +4,22 @@
       <div class="sider">
         <home-sider
           :list="list"
+          :activeId="activeId"
           @activeChange="handleActiveChange"
+          @openChange="handleOpenChange"
+          @add="handleAdd"
         />
       </div>
       <div class="main">
         <home-main
           v-if="activeItem"
           :name="activeItem.name"
-          :active="activeItem.open"
+          :open="activeItem.open"
           :registryPath="activeItem.registry_path"
           :registryKey="activeItem.registry_key"
           :defaultValue="activeItem.default_value"
           :targetValue="activeItem.target_value"
+          @dataChange="handleDataChange"
         />
         <div class="home-main-empty" v-else></div>
       </div>
@@ -37,23 +41,60 @@ export default {
   data() {
     return {
       list: [],
-      activeItem: null,
+      activeId: null,
     };
+  },
+
+  computed: {
+    activeItem() {
+      return this.list.filter(item => item.id === this.activeId)[0] || null;
+    },
+
+    activeIndex() {
+      let index = 0;
+      this.list.forEach((item, i) => {
+        if (item.id === this.activeId) {
+          index = i;
+        }
+      });
+      return index;
+    },
   },
 
   mounted() {
     this.list = [
-      { name: 'App Center', open: true, registry_path: '', registry_key: '', default_value: '', target_value: '' },
-      { name: 'Skin Center', open: false, registry_path: '', registry_key: '', default_value: '', target_value: '' },
-      { name: 'New Doc', open: false, registry_path: '计算机\\HKEY_CURRENT_USER\\Software\\Kingsoft\\Office\\6.0\\plugins\\knewdocs', registry_key: 'knewdocs_url', default_value: '', target_value: 'http://10.226.24.73:10013/' },
-      { name: 'Template Store', open: false, registry_path: '', registry_key: '', default_value: '', target_value: '' },
+      { id: '1', name: 'App Center', open: true, registry_path: '', registry_key: '', default_value: '', target_value: '' },
+      { id: '2', name: 'Skin Center', open: false, registry_path: '', registry_key: '', default_value: '', target_value: '' },
+      { id: '3', name: 'New Doc', open: false, registry_path: '计算机\\HKEY_CURRENT_USER\\Software\\Kingsoft\\Office\\6.0\\plugins\\knewdocs', registry_key: 'knewdocs_url', default_value: '', target_value: 'http://10.226.24.73:10013/' },
+      { id: '4', name: 'Template Store', open: false, registry_path: '', registry_key: '', default_value: '', target_value: '' },
     ];
-    this.activeItem = this.list[0];
+    this.activeId = this.list[0].id;
   },
 
   methods: {
-    handleActiveChange(item) {
-      this.activeItem = item;
+    handleActiveChange(id) {
+      this.activeId = id;
+    },
+
+    handleOpenChange(value) {
+      this.list[this.activeIndex].open = value;
+    },
+
+    handleDataChange(key, value) {
+      this.list[this.activeIndex][key] = value;
+    },
+
+    handleAdd(title) {
+      this.list.push({
+        id: Math.random() + '',
+        name: title,
+        open: false,
+        registry_path: '',
+        registry_key: '',
+        default_value: '',
+        target_value: '',
+      });
+      this.activeItem = this.list[this.list.length - 1];
     },
   },
 };

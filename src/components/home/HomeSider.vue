@@ -6,27 +6,32 @@
         <input class="search-input" v-model="searchText" />
       </div>
     </div>
-    <ul class="home-sider-list">
-      <li class="home-sider-list-item" v-for="(item, index) in filterdList" :key="`sider_item_${index + 1}`">
-        <home-sider-item
-          :active="index === activeIndex"
-          :name="item.name"
-          :open="item.open"
-          @click.native="handleItemClick(item, index)"
-          @openChange="handleItemOpenChange"
-        />
-      </li>
-    </ul>
+    <div class="home-sider-list-wrapper">
+      <ul class="home-sider-list">
+        <li class="home-sider-list-item" v-for="(item, index) in filterdList" :key="`sider_item_${index + 1}`">
+          <home-sider-item
+            :active="item.id === activeId"
+            :name="item.name"
+            :open="item.open"
+            @click.native="handleItemClick(item)"
+            @openChange="handleItemOpenChange"
+          />
+        </li>
+      </ul>
+    </div>
+    <home-sider-tool-bar @add="handleAdd" />
   </div>
 </template>
 
 <script>
 import HomeSiderItem from './HomeSiderItem.vue';
+import HomeSiderToolBar from './HomeSiderToolBar.vue';
 
 export default {
   name: 'HomeSider',
   components: {
     HomeSiderItem,
+    HomeSiderToolBar,
   },
 
   props: {
@@ -34,12 +39,15 @@ export default {
       type: Array,
       default: () => [],
     },
+    activeId: {
+      type: String,
+      default: '',
+    },
   },
 
   data() {
     return {
       searchText: '',
-      activeIndex: 0,
     };
   },
 
@@ -50,13 +58,16 @@ export default {
   },
 
   methods: {
-    handleItemClick(item, index) {
-      this.activeIndex = index;
-      this.$emit('activeChange', item);
+    handleItemClick(item) {
+      this.$emit('activeChange', item.id);
     },
 
     handleItemOpenChange(value) {
-      this.filterdList[this.activeIndex].open = value;
+      this.$emit('openChange', value);
+    },
+
+    handleAdd(title) {
+      this.$emit('add', title);
     },
   },
 };
@@ -69,9 +80,8 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  overflow: auto;
+  overflow: hidden;;
   background-color: #036672;
-  color: #fff;
 
   .search-section {
     padding: 12px 10px;
@@ -106,10 +116,19 @@ export default {
     }
   }
 
-  .home-sider-list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+  .home-sider-list-wrapper {
+    position: absolute;
+    top: 54px;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    overflow: auto;
+
+    .home-sider-list {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
   }
 }
 </style>

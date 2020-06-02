@@ -15,7 +15,7 @@ let win;
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }]);
 
 function createWindow () {
-  Menu.setApplicationMenu(null);
+  // Menu.setApplicationMenu(null);
   // Create the browser window.
   win = new BrowserWindow({ width: 800, height: 500, webPreferences: {
     // Use pluginOptions.nodeIntegration, leave this alone
