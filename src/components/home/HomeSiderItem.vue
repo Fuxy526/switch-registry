@@ -4,11 +4,12 @@
     <span class="name">{{ name }}</span>
     <span class="right-part">
       <toggle-button
-        :value="isOpen"
+        :value="open"
         :height="14"
         :width="28"
         :color="switchOptions.color"
         :switchColor="switchOptions.switchColor"
+        @change="handleSwitchChange"
       />
     </span>
   </div>
@@ -35,7 +36,6 @@ export default {
 
   data() {
     return {
-      isOpen: false,
       switchOptions: {
         color: { checked: 'rgba(255, 255, 255, .2)', unchecked: 'rgba(255, 255, 255, .2)' },
         switchColor: { checked: 'rgba(255, 255, 255, 1)', unchecked: 'rgba(255, 255, 255, .5)' },
@@ -43,8 +43,10 @@ export default {
     };
   },
 
-  mounted() {
-    this.isOpen = open;
+  methods: {
+    handleSwitchChange(data) {
+      this.$emit('openChange', data.value);
+    },
   },
 };
 </script>

@@ -9,9 +9,11 @@
     <ul class="home-sider-list">
       <li class="home-sider-list-item" v-for="(item, index) in filterdList" :key="`sider_item_${index + 1}`">
         <home-sider-item
-          :active="index === 0"
+          :active="index === activeIndex"
           :name="item.name"
           :open="item.open"
+          @click.native="handleItemClick(item, index)"
+          @openChange="handleItemOpenChange"
         />
       </li>
     </ul>
@@ -37,12 +39,24 @@ export default {
   data() {
     return {
       searchText: '',
+      activeIndex: 0,
     };
   },
 
   computed: {
     filterdList() {
       return this.list.filter(item => item.name.toLowerCase().includes(this.searchText.toLowerCase()));
+    },
+  },
+
+  methods: {
+    handleItemClick(item, index) {
+      this.activeIndex = index;
+      this.$emit('activeChange', item);
+    },
+
+    handleItemOpenChange(value) {
+      this.filterdList[this.activeIndex].open = value;
     },
   },
 };

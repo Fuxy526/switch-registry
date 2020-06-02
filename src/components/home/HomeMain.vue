@@ -12,15 +12,19 @@
       <div class="content">
         <div class="form-group">
           <label class="label">REGISTRY PATH</label>
-          <input class="input" type="text" />
+          <input class="input" type="text" v-model="registryPath" />
+        </div>
+        <div class="form-group">
+          <label class="label">REGISTRY KEY</label>
+          <input class="input" type="text" v-model="registryKey" />
         </div>
         <div class="form-group">
           <label class="label">DEFAULT VALUE</label>
-          <input class="input" type="text" />
+          <input class="input" type="text" v-model="defaultValue" />
         </div>
         <div class="form-group">
           <label class="label">TARGET VALUE</label>
-          <input class="input" type="text" />
+          <input class="input" type="text" v-model="targetValue" />
         </div>
       </div>
     </div>
@@ -34,11 +38,27 @@ export default {
   props: {
     name: {
       type: String,
-      default: 'Template Store',
+      default: '',
     },
     active: {
       type: Boolean,
       default: true,
+    },
+    registryPath: {
+      type: String,
+      default: '',
+    },
+    registryKey: {
+      type: String,
+      default: '',
+    },
+    defaultValue: {
+      type: String,
+      default: '',
+    },
+    targetValue: {
+      type: String,
+      default: '',
     },
   },
 };
