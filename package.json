@@ -13,6 +13,7 @@
   },
   "main": "background.js",
   "dependencies": {
+    "@fuxy526/vue-modal": "0.0.1",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-js-toggle-button": "^1.3.3",

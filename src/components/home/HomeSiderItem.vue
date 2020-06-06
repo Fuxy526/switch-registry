@@ -77,6 +77,10 @@ export default {
   .name {
     display: inline-block;
     vertical-align: middle;
+    width: calc(100% - 60px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .right-part {

@@ -1,0 +1,46 @@
+$headerHeight: 32px;
+$green: #036672;
+
+.modal.modal-switch-registry {
+  .modal-popup {
+    .modal-close-button {
+      height: $headerHeight;
+      width: $headerHeight;
+      color: rgba(255, 255, 255, .5);
+
+      &:hover {
+        color: rgba(255, 255, 255, .7);
+      }
+    }
+
+    .modal-header {
+      height: $headerHeight;
+      line-height: $headerHeight;
+      border-bottom: 1px solid rgba(0, 0, 0, .1);
+      padding: 0 16px;
+      background-color: $green;
+      color: #fff;
+
+      .title {
+        font-size: 14px;
+        font-weight: 500;
+        color: #fff;
+      }
+    }
+
+    .modal-header+.modal-body {
+      padding: 24px 24px 10px;
+    }
+
+    .modal-footer {
+      .modal-button {
+        height: 31px;
+        font-size: 12px;
+      }
+
+      .modal-button-ok {
+        background-color: $green;
+      }
+    }
+  }
+}

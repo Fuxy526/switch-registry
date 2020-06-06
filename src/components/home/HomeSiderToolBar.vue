@@ -6,6 +6,20 @@
     <button class="icon-btn right" @click="handleAddClick">
       <i class="icon icon-add"></i>
     </button>
+
+    <modal
+      class="add-modal"
+      skin="switch-registry"
+      title="Add New"
+      :width="380"
+      :visible="addModalVisible"
+      @onCancel="addModalVisible = fasle"
+      @onOk="handleAdd"
+    >
+      <div class="add-input-wrapper">
+        <input ref="addInput" class="add-input" type="text" placeholder="Please enter title" v-model="addTitle" />
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -13,15 +27,33 @@
 export default {
   name: 'HomeSiderToolBar',
 
+  data() {
+    return {
+      addModalVisible: false,
+      addTitle: '',
+    };
+  },
+
+  watch: {
+    addModalVisible(value) {
+      if (!value) {
+        this.addTitle = '';
+      } else {
+        this.$nextTick(() => {
+          this.$refs.addInput.focus();
+        });
+      }
+    },
+  },
+
   methods: {
     handleAddClick() {
-      this.$modal.prompt({
-        title: 'Add new',
-        placeholder: 'Please enter the title',
-        confirmButtonCallback: (title) => {
-          this.$emit('add', title);
-        },
-      });
+      this.addModalVisible = true;
+    },
+
+    handleAdd() {
+      this.$emit('add', this.addTitle);
+      this.addModalVisible = false;
     },
   },
 };
@@ -73,6 +105,27 @@ export default {
 
   .right {
     float: right;
+  }
+
+  .add-modal {
+    z-index: 10;
+
+    .add-input-wrapper {
+      .add-input {
+        height: 32px;
+        width: 100%;
+        border: 1px solid rgba(0, 0, 0, .2);
+        padding: 0 8px;
+        border-radius: 2px;
+        outline: none;
+        color: #64748B;
+
+        &::placeholder {
+          color: #64748B;
+          opacity: .7;
+        }
+      }
+    }
   }
 }
 </style>
