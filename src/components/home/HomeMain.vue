@@ -2,11 +2,15 @@
   <div class="home-main">
     <div class="home-main-wrapper">
       <div class="title-bar">
-        <span class="title">{{ name }}</span>
-        <span :class="['status', open ? 'status-open' : '']">
-          <i class="status-dot"></i>
-          <span class="status-text">{{ open ? 'open' : 'closed' }}</span>
-        </span>
+        <div class="title-wrapper">
+          <span class="title">{{ name }}</span>
+          <span class="status-open" v-if="open">open</span>
+          <span class="status-close" v-else>closed</span>
+        </div>
+        <div class="buttons-wrapper">
+          <button class="button button-rename" @click="renameModalVisible = true">Rename</button>
+          <button class="button button-delete" @click="handleDeleteClick">Delete</button>
+        </div>
       </div>
 
       <div class="content">
@@ -28,12 +32,34 @@
         </div>
       </div>
     </div>
+
+    <modal
+      class="rename-modal"
+      skin="switch-registry"
+      title="Rename"
+      okText="Rename"
+      :width="360"
+      :visible="renameModalVisible"
+      @onCancel="renameModalVisible = fasle"
+      @onOk="handleRename"
+    >
+      <div class="rename-input-wrapper">
+        <input ref="renameInput" class="rename-input" type="text" placeholder="Please enter title" v-model="newName" />
+      </div>
+    </modal>
   </div>
 </template>
 
 <script>
 export default {
   name: 'HomeMain',
+
+  data() {
+    return {
+      renameModalVisible: false,
+      newName: '',
+    };
+  },
 
   props: {
     name: {
@@ -62,6 +88,19 @@ export default {
     },
   },
 
+  watch: {
+    renameModalVisible(value) {
+      if (value) {
+        this.newName = this.name;
+        this.$nextTick(() => {
+          this.$refs.renameInput.focus();
+        });
+      } else {
+        this.newName = '';
+      }
+    },
+  },
+
   methods: {
     handleRegistryPathChange(e) {
       this.$emit('dataChange', 'registry_path', e.target.value);
@@ -77,6 +116,23 @@ export default {
 
     handleTargetValueChange(e) {
       this.$emit('dataChange', 'target_value', e.target.value);
+    },
+
+    handleRename() {
+      this.$emit('rename', this.newName);
+      this.renameModalVisible = false;
+    },
+
+    handleDeleteClick() {
+      this.$modal.show({
+        title: 'Delete',
+        content: 'Are you sure to delete this item?',
+        description: 'The operation cannot be restored.',
+        okText: 'Delete',
+        onOk: () => {
+          this.$emit('delete');
+        },
+      });
     },
   },
 };
@@ -95,41 +151,63 @@ export default {
   .title-bar {
     background-color: #fff;
     padding: 0 20px;
-    height: 54px;
-    line-height: 54px;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
 
-    .title {
-      font-size: 16px;
-      font-weight: bold;
-      color: #1A202C;
-    }
+    .title-wrapper {
+      display: inline-block;
+      width: calc(100% - 150px);
+      line-height: 24px;
+      padding: 14px 0;
 
-    .status {
-      margin-left: 15px;
-      font-size: 12px;
-      color: #6D7C92;
-
-      .status-dot {
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background-color: #ccc;
-        vertical-align: middle;
-        margin-right: 2px;
+      .title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #1A202C;
       }
 
-      .status-text {
+      .status-open,
+      .status-close {
+        padding: 0 8px;
+        height: 18px;
+        line-height: 18px;
+        border-radius: 9px;
         display: inline-block;
         vertical-align: middle;
+        margin-left: 5px;
+        font-size: 12px;
+      }
+
+      .status-close {
+        background-color: #f1f5f9;
+        color: #666;
+      }
+
+      .status-open {
+        background-color: #def7ec;
+        color: #03543f;
       }
     }
 
-    .status-open {
-      .status-dot {
-        background-color: #31C48D;
+    .buttons-wrapper {
+      float: right;
+      height: 54px;
+      line-height: 54px;
+
+      .button {
+        height: 26px;
+        padding: 0 10px;
+        cursor: pointer;
+        background-color: #fff;
+        border: 1px solid rgba(0, 0, 0, .15);
+        border-radius: 4px;
+        outline: none;
+        color: #999;
+        font-size: 12px;
+      }
+
+      .button-rename {
+        margin-right: 8px;
       }
     }
   }
@@ -157,6 +235,26 @@ export default {
         padding: 0 8px;
         color: #64748B;
         font-size: 12px;
+      }
+    }
+  }
+
+  .rename-modal {
+    z-index: 10;
+
+    .rename-input-wrapper {
+      .rename-input {
+        height: 32px;
+        width: 100%;
+        border: 1px solid rgba(0, 0, 0, .2);
+        padding: 0 8px;
+        border-radius: 2px;
+        outline: none;
+        color: #333;
+
+        &::placeholder {
+          color: #999;
+        }
       }
     }
   }

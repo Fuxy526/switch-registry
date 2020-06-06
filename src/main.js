@@ -9,7 +9,10 @@ import './assets/styles/modal/modal-switch-registry.scss';
 Vue.config.productionTip = false;
 
 Vue.use(ToggleButton);
-Vue.use(Modal, { skin: 'switch-registry' });
+Vue.use(Modal, {
+  skin: 'switch-registry',
+  width: 360,
+});
 
 new Vue({
   router,

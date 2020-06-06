@@ -11,7 +11,7 @@
       class="add-modal"
       skin="switch-registry"
       title="Add New"
-      :width="380"
+      :width="360"
       :visible="addModalVisible"
       @onCancel="addModalVisible = fasle"
       @onOk="handleAdd"
@@ -118,11 +118,10 @@ export default {
         padding: 0 8px;
         border-radius: 2px;
         outline: none;
-        color: #64748B;
+        color: #333;
 
         &::placeholder {
-          color: #64748B;
-          opacity: .7;
+          color: #999;
         }
       }
     }

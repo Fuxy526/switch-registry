@@ -20,6 +20,8 @@
           :defaultValue="activeItem.default_value"
           :targetValue="activeItem.target_value"
           @dataChange="handleDataChange"
+          @rename="handleRename"
+          @delete="handleDelete"
         />
         <div class="home-main-empty" v-else></div>
       </div>
@@ -95,6 +97,16 @@ export default {
         target_value: '',
       });
       this.activeId = this.list[this.list.length - 1].id;
+    },
+
+    handleRename(name) {
+      this.list[this.activeIndex].name = name;
+    },
+
+    handleDelete() {
+      const activeIndex = this.activeIndex;
+      this.list = this.list.filter(item => item.id !== this.activeId);
+      this.activeId = this.list[activeIndex] ? this.list[activeIndex].id : (this.list[activeIndex - 1] ? this.list[activeIndex - 1].id : null);
     },
   },
 };

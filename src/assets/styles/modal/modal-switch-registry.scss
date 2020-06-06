@@ -1,7 +1,9 @@
-$headerHeight: 32px;
+$headerHeight: 30px;
 $green: #036672;
 
 .modal.modal-switch-registry {
+  z-index: 10;
+
   .modal-popup {
     .modal-close-button {
       height: $headerHeight;
@@ -29,12 +31,12 @@ $green: #036672;
     }
 
     .modal-header+.modal-body {
-      padding: 24px 24px 10px;
+      padding: 24px 24px 14px;
     }
 
     .modal-footer {
       .modal-button {
-        height: 31px;
+        height: 30px;
         font-size: 12px;
       }
 
