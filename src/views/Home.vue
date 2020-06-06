@@ -94,7 +94,7 @@ export default {
         default_value: '',
         target_value: '',
       });
-      this.activeItem = this.list[this.list.length - 1];
+      this.activeId = this.list[this.list.length - 1].id;
     },
   },
 };
