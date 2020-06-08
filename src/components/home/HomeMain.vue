@@ -40,7 +40,7 @@
       okText="Rename"
       :width="360"
       :visible="renameModalVisible"
-      @onCancel="renameModalVisible = fasle"
+      @onCancel="renameModalVisible = false"
       @onOk="handleRename"
     >
       <div class="rename-input-wrapper">
