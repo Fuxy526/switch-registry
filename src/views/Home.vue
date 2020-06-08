@@ -33,6 +33,7 @@
 import HomeSider from '../components/home/HomeSider.vue';
 import HomeMain from '../components/home/HomeMain.vue';
 import HomeMainEmpty from '../components/home/HomeMainEmpty.vue';
+import regedit from '../utils/regedit';
 import storage from '../utils/storage';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -84,8 +85,17 @@ export default {
       this.activeId = id;
     },
 
-    handleOpenChange(value) {
-      this.list[this.activeIndex].open = value;
+    async handleOpenChange(open) {
+      try {
+        const { registry_path, registry_key, default_value, target_value } = this.activeItem;
+        const value = open ? target_value : default_value;
+        this.list[this.activeIndex].open = open;
+        await regedit.set(registry_path, registry_key, value);
+        this.updateStorage();
+      } catch (err) {
+        console.log('error: ', err);
+        this.list[this.activeIndex].open = !open;
+      }
     },
 
     handleDataChange(key, value) {

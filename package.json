@@ -16,6 +16,7 @@
     "@fuxy526/vue-modal": "0.0.1",
     "core-js": "^3.6.5",
     "electron-store": "^5.2.0",
+    "rage-edit": "^1.2.0",
     "uuid": "^8.1.0",
     "vue": "^2.6.11",
     "vue-js-toggle-button": "^1.3.3",

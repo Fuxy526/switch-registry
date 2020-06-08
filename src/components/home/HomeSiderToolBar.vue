@@ -13,7 +13,7 @@
       title="Add New"
       :width="360"
       :visible="addModalVisible"
-      @onCancel="addModalVisible = fasle"
+      @onCancel="addModalVisible = false"
       @onOk="handleAdd"
     >
       <div class="add-input-wrapper">
