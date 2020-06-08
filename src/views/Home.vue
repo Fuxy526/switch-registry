@@ -23,7 +23,7 @@
           @rename="handleRename"
           @delete="handleDelete"
         />
-        <div class="home-main-empty" v-else></div>
+        <home-main-empty v-else />
       </div>
     </div>
   </div>
@@ -32,12 +32,14 @@
 <script>
 import HomeSider from '../components/home/HomeSider.vue';
 import HomeMain from '../components/home/HomeMain.vue';
+import HomeMainEmpty from '../components/home/HomeMainEmpty.vue';
 
 export default {
   name: 'Home',
   components: {
     HomeSider,
     HomeMain,
+    HomeMainEmpty,
   },
 
   data() {
@@ -65,10 +67,10 @@ export default {
 
   mounted() {
     this.list = [
-      { id: '1', name: 'App Center', open: true, registry_path: '', registry_key: '', default_value: '', target_value: '' },
-      { id: '2', name: 'Skin Center', open: false, registry_path: '', registry_key: '', default_value: '', target_value: '' },
-      { id: '3', name: 'New Doc', open: false, registry_path: '计算机\\HKEY_CURRENT_USER\\Software\\Kingsoft\\Office\\6.0\\plugins\\knewdocs', registry_key: 'knewdocs_url', default_value: '', target_value: 'http://10.226.24.73:10013/' },
-      { id: '4', name: 'Template Store', open: false, registry_path: '', registry_key: '', default_value: '', target_value: '' },
+      { id: '1', name: 'demo', open: false, registry_path: '', registry_key: '', default_value: '', target_value: '' },
+      // { id: '2', name: 'Skin Center', open: false, registry_path: '', registry_key: '', default_value: '', target_value: '' },
+      // { id: '3', name: 'New Doc', open: false, registry_path: '计算机\\HKEY_CURRENT_USER\\Software\\Kingsoft\\Office\\6.0\\plugins\\knewdocs', registry_key: 'knewdocs_url', default_value: '', target_value: 'http://10.226.24.73:10013/' },
+      // { id: '4', name: 'Template Store', open: false, registry_path: '', registry_key: '', default_value: '', target_value: '' },
     ];
     this.activeId = this.list[0].id;
   },
@@ -120,6 +122,7 @@ export default {
   left: 0;
   right: 0;
   overflow: auto;
+  border-top: 1px solid #eee;
 
   .home-container {
     position: absolute;

@@ -151,7 +151,6 @@ export default {
   .title-bar {
     background-color: #fff;
     padding: 0 20px;
-    border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
 
     .title-wrapper {
