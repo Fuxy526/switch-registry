@@ -155,7 +155,7 @@ export default {
 
     .title-wrapper {
       display: inline-block;
-      width: calc(100% - 150px);
+      width: calc(100% - 170px);
       line-height: 24px;
       padding: 14px 0;
 
@@ -203,10 +203,35 @@ export default {
         outline: none;
         color: #999;
         font-size: 12px;
+
+        &:hover {
+          border: 1px solid rgba(0, 0, 0, .2);
+        }
+
+        &:before {
+          content: '';
+          display: inline-block;
+          vertical-align: -1px;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          margin-right: 4px;
+          width: 12px;
+          height: 12px;
+        }
       }
 
       .button-rename {
         margin-right: 8px;
+
+        &:before {
+          background-image: url('../../assets/images/icon/icon-rename.svg');
+        }
+      }
+
+      .button-delete {
+        &:before {
+          background-image: url('../../assets/images/icon/icon-delete.svg');
+        }
       }
     }
   }
