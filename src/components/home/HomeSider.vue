@@ -78,7 +78,6 @@ export default {
 
   watch: {
     addModalVisible(value) {
-      console.log('addModalVisible: ', value);
       if (!value) {
         this.addTitle = '';
       } else {
@@ -99,7 +98,6 @@ export default {
     },
 
     handleAddClick() {
-      console.log('click');
       this.addModalVisible = true;
     },
 
@@ -212,13 +210,14 @@ export default {
 
     .add-input-wrapper {
       .add-input {
-        height: 32px;
+        height: 38px;
         width: 100%;
-        border: 1px solid rgba(0, 0, 0, .2);
-        padding: 0 8px;
-        border-radius: 2px;
+        border: 0;
+        border-bottom: 1px solid #e6e6e6;
+        padding: 0 5px;
         outline: none;
         color: #333;
+
 
         &::placeholder {
           color: #999;

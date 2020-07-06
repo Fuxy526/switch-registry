@@ -72,7 +72,15 @@ export default {
       this.list = stored;
     } else {
       this.list = [
-        { id: uuidv4(), name: 'demo', open: false, registry_path: '', registry_key: '', default_value: '', target_value: '' },
+        {
+          id: uuidv4(),
+          name: 'Demo',
+          open: false,
+          registry_path: 'HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main',
+          registry_key: 'Start Page',
+          default_value: 'https://microsoft.com',
+          target_value: 'https://google.com',
+        },
       ];
     }
     this.activeId = this.list[0].id;

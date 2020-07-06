@@ -1,32 +1,38 @@
-$headerHeight: 30px;
+$headerHeight: 40px;
 $green: #036672;
 
 .modal.modal-switch-registry {
+  left: 5px;
+  top: 5px;
+  right: 5px;
+  bottom: 5px;
   z-index: 10;
+  border-radius: 4px;
+  overflow: hidden;
 
   .modal-popup {
     .modal-close-button {
       height: $headerHeight;
       width: $headerHeight;
-      color: rgba(255, 255, 255, .5);
+      color: rgba(0, 0, 0, .6);
 
       &:hover {
-        color: rgba(255, 255, 255, .7);
+        color: rgba(0, 0, 0, .5);
       }
     }
 
     .modal-header {
       height: $headerHeight;
       line-height: $headerHeight;
-      border-bottom: 1px solid rgba(0, 0, 0, .1);
+      border-bottom: 1px solid #eee;
       padding: 0 16px;
-      background-color: $green;
-      color: #fff;
+      background-color: #F8F8F8;
+      color: #333;
 
       .title {
         font-size: 14px;
         font-weight: 500;
-        color: #fff;
+        color: #333;
       }
     }
 
@@ -34,10 +40,24 @@ $green: #036672;
       padding: 24px 24px 14px;
     }
 
+    .modal-body {
+      .modal-body-wrapper {
+        text-align: left;
+      }
+    }
+
     .modal-footer {
+      padding: 10px 24px 24px;
+      text-align: right;
+
       .modal-button {
         height: 30px;
-        font-size: 12px;
+        font-size: 13px;
+        min-width: 50px;
+      }
+
+      .modal-button-cancel {
+        border: 1px solid #dedede;
       }
 
       .modal-button-ok {

@@ -1,17 +1,43 @@
 <template>
   <div class="home-sider-tool-bar">
-    <button class="icon-btn">
+    <button class="icon-btn" @click.stop="showMenu = true">
       <i class="icon icon-setting"></i>
     </button>
-    <button class="icon-btn right">
+    <button class="icon-btn right" @click="handleRefresh">
       <i class="icon icon-refresh"></i>
     </button>
+
+    <div class="menu" v-show="showMenu">
+      <ul class="menu-list">
+        <li class="menu-item">Export</li>
+        <li class="menu-item">Import</li>
+        <li class="menu-item">Language</li>
+        <li class="menu-item">About</li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'HomeSiderToolBar',
+
+  data() {
+    return {
+      showMenu: false,
+    };
+  },
+
+  mounted() {
+    this.$bus.on('APP_CLICK', () => {
+      this.showMenu = false;
+    });
+  },
+
+  methods: {
+    handleRefresh() {
+    },
+  },
 };
 </script>
 
@@ -63,6 +89,33 @@ export default {
     float: right;
   }
 
+  .menu {
+    position: absolute;
+    bottom: 35px;
+    left: 3px;
 
+    .menu-list {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      background-color: rgba(0, 0, 0, .25);
+      color: rgba(255, 255, 255, .8);
+      width: 100px;
+      border-radius: 2px;
+
+      .menu-item {
+        height: 30px;
+        line-height: 30px;
+        padding: 0 15px;
+        font-size: 12px;
+        cursor: pointer;
+
+        &:hover {
+          color: rgba(255, 255, 255, 1);
+          background-color: rgba(255, 255, 255, .05);
+        }
+      }
+    }
+  }
 }
 </style>

@@ -16,19 +16,19 @@
       <div class="content">
         <div class="form-group">
           <label class="label">REGISTRY PATH</label>
-          <input class="input" type="text" :value="registryPath" @change="handleRegistryPathChange" />
+          <input class="input" type="text" placeholder="Example: HKEY_CURRENT_USER\Software\Microsoft\Xxx\Xxx" :value="registryPath" @change="handleRegistryPathChange" />
         </div>
         <div class="form-group">
           <label class="label">REGISTRY KEY</label>
-          <input class="input" type="text" :value="registryKey" @change="handleRegistryKeyChange" />
+          <input class="input" type="text" placeholder="Example: Mode" :value="registryKey" @change="handleRegistryKeyChange" />
         </div>
         <div class="form-group">
           <label class="label">DEFAULT VALUE</label>
-          <input class="input" type="text" :value="defaultValue" @change="handleDefaultValueChange" />
+          <input class="input" type="text" placeholder="Example: 0" :value="defaultValue" @change="handleDefaultValueChange" />
         </div>
         <div class="form-group">
           <label class="label">TARGET VALUE</label>
-          <input class="input" type="text" :value="targetValue" @change="handleTargetValueChange" />
+          <input class="input" type="text" placeholder="Example: 1" :value="targetValue" @change="handleTargetValueChange" />
         </div>
       </div>
     </div>
@@ -242,25 +242,37 @@ export default {
     padding: 20px 30px 20px 25px;
 
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 25px;
 
       .label {
         display: block;
-        font-size: 12px;
-        font-weight: bold;
+        font-size: 11px;
         margin-bottom: 6px;
         color: #64748B;
       }
 
       .input {
         width: 100%;
-        border: 1px solid #e6e6e6;
+        border: 0;
+        border-bottom: 1px solid #e2e2e2;
         height: 30px;
-        border-radius: 4px;
         outline: none;
-        padding: 0 8px;
         color: #64748B;
+        font-weight: bold;
         font-size: 12px;
+        background-color: transparent;
+        transition: all .2s ease-in-out;
+
+        &:focus {
+          border-bottom: 1px solid #036672;
+          transition: all .2s ease-in-out;
+        }
+
+        &::placeholder {
+          color: #64748B;
+          opacity: .25;
+          font-weight: normal;
+        }
       }
     }
   }

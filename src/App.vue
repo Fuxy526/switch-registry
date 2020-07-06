@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @click="handleAppClick">
     <common-navigation />
     <router-view/>
   </div>
@@ -12,6 +12,12 @@ export default {
   name: 'App',
   components: {
     CommonNavigation,
+  },
+
+  methods: {
+    handleAppClick() {
+      this.$bus.emit('APP_CLICK');
+    },
   },
 };
 </script>
