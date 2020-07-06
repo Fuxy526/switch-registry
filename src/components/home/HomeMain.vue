@@ -7,10 +7,10 @@
           <span class="status-open" v-if="open">open</span>
           <span class="status-close" v-else>closed</span>
         </div>
-        <div class="buttons-wrapper">
+        <!-- <div class="buttons-wrapper">
           <button class="button button-rename" @click="renameModalVisible = true">Rename</button>
           <button class="button button-delete" @click="handleDeleteClick">Delete</button>
-        </div>
+        </div> -->
       </div>
 
       <div class="content">
@@ -147,10 +147,12 @@ export default {
   left: 0;
   right: 0;
   overflow: auto;
+  border: 1px solid #D9D9D9;
+  border-left: 0;
 
   .title-bar {
     background-color: #fff;
-    padding: 0 20px;
+    padding: 12px 20px 0;
     border-bottom: 1px solid #eee;
 
     .title-wrapper {

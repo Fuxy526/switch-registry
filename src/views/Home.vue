@@ -54,15 +54,13 @@ export default {
 
   computed: {
     activeItem() {
-      return this.list.filter(item => item.id === this.activeId)[0] || null;
+      return this.getItemFromId(this.activeId);
     },
 
     activeIndex() {
       let index = 0;
       this.list.forEach((item, i) => {
-        if (item.id === this.activeId) {
-          index = i;
-        }
+        item.id === this.activeId && (index = i);
       });
       return index;
     },
@@ -81,25 +79,42 @@ export default {
   },
 
   methods: {
+    getItemFromId(id) {
+      let index = 0;
+      this.list.forEach((item, i) => {
+        item.id === id && (index = i);
+      });
+      return this.list[index];
+    },
+
     handleActiveChange(id) {
       this.activeId = id;
     },
 
-    async handleOpenChange(open) {
+    async handleOpenChange(id, open) {
+      const item = this.getItemFromId(id);
+      const { registry_path, registry_key, default_value, target_value } = item;
+      const value = open ? target_value : default_value;
+      item.open = open;
+
       try {
-        const { registry_path, registry_key, default_value, target_value } = this.activeItem;
-        const value = open ? target_value : default_value;
-        this.list[this.activeIndex].open = open;
         await regedit.set(registry_path, registry_key, value);
-        this.updateStorage();
       } catch (err) {
         console.log('error: ', err);
-        this.list[this.activeIndex].open = !open;
+        item.open = false;
+        this.$modal.show({
+            title: 'Warning',
+          content: 'The registry path is invalid.',
+          description: 'Please modify the config and retry.',
+          cancelText: '',
+        });
       }
+
+      this.updateStorage();
     },
 
     handleDataChange(key, value) {
-      this.list[this.activeIndex][key] = value;
+      this.activeItem[key] = value;
       this.updateStorage();
     },
 
@@ -144,7 +159,6 @@ export default {
   left: 0;
   right: 0;
   overflow: auto;
-  border-top: 1px solid #eee;
 
   .home-container {
     position: absolute;

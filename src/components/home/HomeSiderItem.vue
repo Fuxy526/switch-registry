@@ -3,12 +3,16 @@
     <i class="icon-doc"></i>
     <span class="name">{{ name }}</span>
     <span class="right-part">
-      <toggle-button
-        v-model="isOpen"
+      <!-- <toggle-button
+        :value="open"
         :height="14"
         :width="28"
         :color="switchOptions.color"
         :switchColor="switchOptions.switchColor"
+        @change="handleSwitchChange"
+      /> -->
+      <common-switch
+        :on="open"
         @change="handleSwitchChange"
       />
     </span>
@@ -16,8 +20,13 @@
 </template>
 
 <script>
+import CommonSwitch from '../common/CommonSwitch.vue';
+
 export default {
   name: 'HomeSiderItem',
+  components: {
+    CommonSwitch,
+  },
 
   props: {
     name: {
@@ -36,7 +45,6 @@ export default {
 
   data() {
     return {
-      isOpen: false,
       switchOptions: {
         color: { checked: 'rgba(255, 255, 255, .2)', unchecked: 'rgba(255, 255, 255, .2)' },
         switchColor: { checked: 'rgba(255, 255, 255, 1)', unchecked: 'rgba(255, 255, 255, .5)' },
@@ -44,19 +52,9 @@ export default {
     };
   },
 
-  watch: {
-    open(value) {
-      this.isOpen = value;
-    },
-  },
-
-  mounted() {
-    this.isOpen = this.open;
-  },
-
   methods: {
-    handleSwitchChange(data) {
-      this.$emit('openChange', data.value);
+    handleSwitchChange(value) {
+      this.$emit('openChange', value);
     },
   },
 };

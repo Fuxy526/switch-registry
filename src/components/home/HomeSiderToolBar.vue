@@ -3,59 +3,15 @@
     <button class="icon-btn">
       <i class="icon icon-setting"></i>
     </button>
-    <button class="icon-btn right" @click="handleAddClick">
-      <i class="icon icon-add"></i>
+    <button class="icon-btn right">
+      <i class="icon icon-refresh"></i>
     </button>
-
-    <modal
-      class="add-modal"
-      skin="switch-registry"
-      title="Add New"
-      :width="360"
-      :visible="addModalVisible"
-      @onCancel="addModalVisible = false"
-      @onOk="handleAdd"
-    >
-      <div class="add-input-wrapper">
-        <input ref="addInput" class="add-input" type="text" placeholder="Please enter title" v-model="addTitle" />
-      </div>
-    </modal>
   </div>
 </template>
 
 <script>
 export default {
   name: 'HomeSiderToolBar',
-
-  data() {
-    return {
-      addModalVisible: false,
-      addTitle: '',
-    };
-  },
-
-  watch: {
-    addModalVisible(value) {
-      if (!value) {
-        this.addTitle = '';
-      } else {
-        this.$nextTick(() => {
-          this.$refs.addInput.focus();
-        });
-      }
-    },
-  },
-
-  methods: {
-    handleAddClick() {
-      this.addModalVisible = true;
-    },
-
-    handleAdd() {
-      this.$emit('add', this.addTitle);
-      this.addModalVisible = false;
-    },
-  },
 };
 </script>
 
@@ -93,9 +49,9 @@ export default {
       background-position: center center;
     }
 
-    .icon-add {
-      width: 23px;
-      background-image: url('../../assets/images/icon/icon-add.svg');
+    .icon-refresh {
+      width: 17px;
+      background-image: url('../../assets/images/icon/icon-refresh.svg');
     }
 
     .icon-setting {
@@ -107,24 +63,6 @@ export default {
     float: right;
   }
 
-  .add-modal {
-    z-index: 10;
 
-    .add-input-wrapper {
-      .add-input {
-        height: 32px;
-        width: 100%;
-        border: 1px solid rgba(0, 0, 0, .2);
-        padding: 0 8px;
-        border-radius: 2px;
-        outline: none;
-        color: #333;
-
-        &::placeholder {
-          color: #999;
-        }
-      }
-    }
-  }
 }
 </style>
