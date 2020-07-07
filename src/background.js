@@ -1,6 +1,6 @@
 'use strict';
 
-import { app, protocol, BrowserWindow, Menu } from 'electron';
+import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
 import {
   createProtocol,
   /* installVueDevtools */
@@ -21,7 +21,7 @@ function createWindow () {
     width: 800,
     height: 500,
     frame: false,
-    transparent: true,
+    // transparent: true,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
@@ -97,3 +97,19 @@ if (isDevelopment) {
     });
   }
 }
+
+ipcMain.on('window-minimize', () => {
+  win.minimize();
+});
+
+ipcMain.on('window-maximize', () => {
+  if (win.isMaximized()) {
+    win.unmaximize();
+  } else {
+    win.maximize();
+  }
+});
+
+ipcMain.on('window-close', () => {
+  win.close();
+});

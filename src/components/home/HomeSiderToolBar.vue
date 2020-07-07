@@ -12,7 +12,7 @@
         <li class="menu-item">Export</li>
         <li class="menu-item">Import</li>
         <li class="menu-item">Language</li>
-        <li class="menu-item">About</li>
+        <li class="menu-item" @click="handleAboutClick">About</li>
       </ul>
     </div>
   </div>
@@ -36,6 +36,15 @@ export default {
 
   methods: {
     handleRefresh() {
+    },
+
+    handleAboutClick() {
+      this.$modal.show({
+        title: 'About',
+        content: `Version: ${require('../../../package.json').version}`,
+        description: 'Author: Fuxy526',
+        cancelText: '',
+      });
     },
   },
 };

@@ -36,12 +36,10 @@ body {
 
 #app {
   position: absolute;
-  top: 5px;
-  bottom: 5px;
-  left: 5px;
-  right: 5px;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, .3);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   overflow: hidden;
-  border-radius: 4px;
 }
 </style>

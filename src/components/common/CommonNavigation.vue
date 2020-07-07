@@ -1,13 +1,13 @@
 <template>
   <div class="common-navigation" @contextmenu.prevent>
     <div class="native-buttons">
-      <button class="button button-minimized">
+      <button class="button button-minimized" @click="handleMinimize">
         <i class="icon icon-minimized"></i>
       </button>
-      <button class="button button-maximized">
+      <button class="button button-maximized" @click="handleMaximize">
         <i class="icon icon-maximized"></i>
       </button>
-      <button class="button button-close">
+      <button class="button button-close" @click="handleClose">
         <i class="icon icon-close"></i>
       </button>
     </div>
@@ -15,8 +15,24 @@
 </template>
 
 <script>
+import { ipcRenderer } from 'electron';
+
 export default {
   name: 'CommonNavigation',
+
+  methods: {
+    handleMinimize() {
+      ipcRenderer.send('window-minimize');
+    },
+
+    handleMaximize() {
+      ipcRenderer.send('window-maximize');
+    },
+
+    handleClose() {
+      ipcRenderer.send('window-cloes');
+    },
+  },
 };
 </script>
 

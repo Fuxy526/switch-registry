@@ -121,7 +121,7 @@ export default {
 
   .search-section {
     padding: 26px 10px 0;
-    height: 68px;
+    height: 65px;
 
     .search-input-wrapper {
       position: relative;
@@ -192,7 +192,7 @@ export default {
 
   .home-sider-list-wrapper {
     position: absolute;
-    top: 68px;
+    top: 65px;
     bottom: 30px;
     left: 0;
     right: 0;
