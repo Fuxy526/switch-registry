@@ -15,20 +15,26 @@
 
       <div class="content">
         <div class="form-group">
-          <label class="label">REGISTRY PATH</label>
-          <input class="input" type="text" placeholder="Example: HKEY_CURRENT_USER\Software\Microsoft\Xxx\Xxx" :value="registryPath" @change="handleRegistryPathChange" />
+          <label class="label">KEY NAME</label>
+          <input class="input" type="text" placeholder="Please enter key name" :value="keyName" @change="handleKeyNameChange" />
         </div>
         <div class="form-group">
-          <label class="label">REGISTRY KEY</label>
-          <input class="input" type="text" placeholder="Example: Mode" :value="registryKey" @change="handleRegistryKeyChange" />
+          <label class="label">VALUE NAME</label>
+          <input class="input" type="text" placeholder="Please enter value name" :value="valueName" @change="handleValueNameChange" />
         </div>
         <div class="form-group">
-          <label class="label">DEFAULT VALUE</label>
-          <input class="input" type="text" placeholder="Example: 0" :value="defaultValue" @change="handleDefaultValueChange" />
+          <label class="label">DEFAULT DATA</label>
+          <select class="select" :value="defaultType" @change="handleDefaultTypeChange">
+            <option class="option" v-for="item in types" :key="item" :name="item">{{ item }}</option>
+          </select>
+          <input class="input" type="text" placeholder="Please enter default data" :value="defaultData" @change="handleDefaultDataChange" />
         </div>
         <div class="form-group">
-          <label class="label">TARGET VALUE</label>
-          <input class="input" type="text" placeholder="Example: 1" :value="targetValue" @change="handleTargetValueChange" />
+          <label class="label">TARGET DATA</label>
+          <select class="select" :value="targetType" @change="handleTargetTypeChange">
+            <option class="option" v-for="item in types" :key="item" :name="item">{{ item }}</option>
+          </select>
+          <input class="input" type="text" placeholder="Please enter target data" :value="targetData" @change="handleTargetDataChange" />
         </div>
       </div>
     </div>
@@ -58,6 +64,7 @@ export default {
     return {
       renameModalVisible: false,
       newName: '',
+      types: ['REG_SZ', 'REG_MULTI_SZ', 'REG_DWORD_BIG_ENDIAN', 'REG_DWORD', 'REG_BINARY', 'REG_DWORD_LITTLE_ENDIAN', 'REG_LINK', 'REG_FULL_RESOURCE_DESCRIPTOR', 'REG_EXPAND_SZ'],
     };
   },
 
@@ -70,19 +77,27 @@ export default {
       type: Boolean,
       default: true,
     },
-    registryPath: {
+    keyName: {
       type: String,
       default: '',
     },
-    registryKey: {
+    valueName: {
       type: String,
       default: '',
     },
-    defaultValue: {
+    defaultType: {
       type: String,
       default: '',
     },
-    targetValue: {
+    defaultData: {
+      type: String,
+      default: '',
+    },
+    targetType: {
+      type: String,
+      default: '',
+    },
+    targetData: {
       type: String,
       default: '',
     },
@@ -102,20 +117,28 @@ export default {
   },
 
   methods: {
-    handleRegistryPathChange(e) {
-      this.$emit('dataChange', 'registry_path', e.target.value);
+    handleKeyNameChange(e) {
+      this.$emit('dataChange', 'key_name', e.target.value);
     },
 
-    handleRegistryKeyChange(e) {
-      this.$emit('dataChange', 'registry_key', e.target.value);
+    handleValueNameChange(e) {
+      this.$emit('dataChange', 'value_name', e.target.value);
     },
 
-    handleDefaultValueChange(e) {
-      this.$emit('dataChange', 'default_value', e.target.value);
+    handleDefaultTypeChange(e) {
+      this.$emit('dataChange', 'default_type', e.target.value);
     },
 
-    handleTargetValueChange(e) {
-      this.$emit('dataChange', 'target_value', e.target.value);
+    handleDefaultDataChange(e) {
+      this.$emit('dataChange', 'default_data', e.target.value);
+    },
+
+    handleTargetTypeChange(e) {
+      this.$emit('dataChange', 'target_type', e.target.value);
+    },
+
+    handleTargetDataChange(e) {
+      this.$emit('dataChange', 'target_data', e.target.value);
     },
 
     handleRename() {
@@ -249,6 +272,33 @@ export default {
         font-size: 11px;
         margin-bottom: 6px;
         color: #64748B;
+      }
+
+      .select {
+        width: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        border: 0;
+        border-bottom: 1px solid #e2e2e2;
+        height: 30px;
+        outline: none;
+        color: #64748B;
+        font-weight: bold;
+        font-size: 12px;
+        background-color: transparent;
+        transition: all .2s ease-in-out;
+        cursor: pointer;
+
+        &:focus {
+          border-bottom: 1px solid #036672;
+          transition: all .2s ease-in-out;
+        }
+      }
+
+      .select+.input {
+        width: calc(100% - 90px);
+        margin-left: 10px;
       }
 
       .input {

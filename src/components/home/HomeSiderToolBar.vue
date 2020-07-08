@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import registry from '../../utils/registry';
+
 export default {
   name: 'HomeSiderToolBar',
 
@@ -36,6 +38,7 @@ export default {
 
   methods: {
     handleRefresh() {
+      registry.open();
     },
 
     handleAboutClick() {

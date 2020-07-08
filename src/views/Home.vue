@@ -15,10 +15,12 @@
           v-if="activeItem"
           :name="activeItem.name"
           :open="activeItem.open"
-          :registryPath="activeItem.registry_path"
-          :registryKey="activeItem.registry_key"
-          :defaultValue="activeItem.default_value"
-          :targetValue="activeItem.target_value"
+          :keyName="activeItem.key_name"
+          :valueName="activeItem.value_name"
+          :defaultType="activeItem.default_type"
+          :defaultData="activeItem.default_data"
+          :targetType="activeItem.target_type"
+          :targetData="activeItem.target_data"
           @dataChange="handleDataChange"
           @rename="handleRename"
           @delete="handleDelete"
@@ -33,7 +35,7 @@
 import HomeSider from '../components/home/HomeSider.vue';
 import HomeMain from '../components/home/HomeMain.vue';
 import HomeMainEmpty from '../components/home/HomeMainEmpty.vue';
-import regedit from '../utils/regedit';
+import registry from '../utils/registry';
 import storage from '../utils/storage';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -67,6 +69,7 @@ export default {
   },
 
   mounted() {
+    // storage.delete('SWITCH_REGISTRY_LIST');
     const stored = storage.get('SWITCH_REGISTRY_LIST');
     if (stored) {
       this.list = stored;
@@ -76,10 +79,12 @@ export default {
           id: uuidv4(),
           name: 'Demo',
           open: false,
-          registry_path: 'HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main',
-          registry_key: 'Start Page',
-          default_value: 'https://microsoft.com',
-          target_value: 'https://google.com',
+          key_name: 'HKEY_CURRENT_USER\\Software\\Microsoft\\Internet Explorer\\Main',
+          value_name: 'Start Page',
+          default_type: 'REG_SZ',
+          default_data: 'https://microsoft.com',
+          target_type: 'REG_SZ',
+          target_data: 'https://google.com',
         },
       ];
     }
@@ -99,26 +104,25 @@ export default {
       this.activeId = id;
     },
 
-    async handleOpenChange(id, open) {
+    handleOpenChange(id, open) {
       const item = this.getItemFromId(id);
-      const { registry_path, registry_key, default_value, target_value } = item;
-      const value = open ? target_value : default_value;
+      const { key_name, value_name, default_type, default_data, target_type, target_data } = item;
+      const type = open ? target_type : default_type;
+      const data = open ? target_data : default_data;
       item.open = open;
 
-      try {
-        await regedit.set(registry_path, registry_key, value);
-      } catch (err) {
+      registry.add(key_name, value_name, type, data).then(() => {
+        this.updateStorage();
+      }).catch(err => {
         console.log('error: ', err);
         item.open = false;
         this.$modal.show({
-            title: 'Warning',
-          content: 'The registry path is invalid.',
+          title: 'Warning',
+          content: 'The key name is invalid.',
           description: 'Please modify the config and retry.',
           cancelText: '',
         });
-      }
-
-      this.updateStorage();
+      });
     },
 
     handleDataChange(key, value) {
@@ -126,15 +130,17 @@ export default {
       this.updateStorage();
     },
 
-    handleAdd(title) {
+    handleAdd({ name, key_name, value_name, default_type, default_data, target_type, target_data }) {
       this.list.push({
         id: uuidv4(),
-        name: title,
+        name,
         open: false,
-        registry_path: '',
-        registry_key: '',
-        default_value: '',
-        target_value: '',
+        key_name,
+        value_name,
+        default_type,
+        default_data,
+        target_type,
+        target_data,
       });
       this.activeId = this.list[this.list.length - 1].id;
       this.updateStorage();

@@ -27,14 +27,44 @@
     <modal
       class="add-modal"
       skin="switch-registry"
-      title="Add New"
-      :width="360"
+      title="Create New"
+      :width="540"
       :visible="addModalVisible"
+      :overlayClosable="false"
+      okText="Create"
       @onCancel="addModalVisible = false"
       @onOk="handleAdd"
     >
-      <div class="add-input-wrapper">
-        <input ref="addInput" class="add-input" type="text" placeholder="Please enter title" v-model="addTitle" />
+      <div class="add-modal-wrapper">
+        <div class="add-input-wrapper">
+          <label class="label">NAME</label>
+          <input ref="addNameInput" class="add-input" type="text" placeholder="Please enter name" v-model="addName" />
+        </div>
+        <div class="add-input-wrapper">
+          <label class="label">KEY NAME</label>
+          <input class="add-input" type="text" placeholder="Please enter key name" v-model="addKeyName" />
+        </div>
+        <div class="add-input-wrapper">
+          <label class="label">VALUE NAME</label>
+          <input class="add-input" type="text" placeholder="Please enter value name" v-model="addValueName" />
+        </div>
+        <div class="add-input-wrapper">
+          <label class="label">DEFAULT DATA</label>
+          <select class="select" v-model="addDefaultType">
+            <option class="option" v-for="item in types" :key="item" :name="item">{{ item }}</option>
+          </select>
+          <input class="add-input" type="text" placeholder="Please enter default data" v-model="addDefaultData" />
+          <button class="autorenew-button" @click="handleAutoRenew">
+            <i class="icon-autorenew"></i>
+          </button>
+        </div>
+        <div class="add-input-wrapper">
+          <label class="label">TARGET DATA</label>
+          <select class="select" v-model="addTargetType">
+            <option class="option" v-for="item in types" :key="item" :name="item">{{ item }}</option>
+          </select>
+          <input class="add-input" type="text" placeholder="Please enter target data" v-model="addTargetData" />
+        </div>
       </div>
     </modal>
   </div>
@@ -43,6 +73,7 @@
 <script>
 import HomeSiderItem from './HomeSiderItem.vue';
 import HomeSiderToolBar from './HomeSiderToolBar.vue';
+import registry from '../../utils/registry';
 
 export default {
   name: 'HomeSider',
@@ -66,7 +97,14 @@ export default {
     return {
       searchText: '',
       addModalVisible: false,
-      addTitle: '',
+      addName: '',
+      addKeyName: '',
+      addValueName: '',
+      addDefaultType: 'REG_SZ',
+      addDefaultData: '',
+      addTargetType: 'REG_SZ',
+      addTargetData: '',
+      types: ['REG_SZ', 'REG_MULTI_SZ', 'REG_DWORD_BIG_ENDIAN', 'REG_DWORD', 'REG_BINARY', 'REG_DWORD_LITTLE_ENDIAN', 'REG_LINK', 'REG_FULL_RESOURCE_DESCRIPTOR', 'REG_EXPAND_SZ'],
     };
   },
 
@@ -79,10 +117,10 @@ export default {
   watch: {
     addModalVisible(value) {
       if (!value) {
-        this.addTitle = '';
+        this.clearAddData();
       } else {
         this.$nextTick(() => {
-          this.$refs.addInput.focus();
+          this.$refs.addNameInput.focus();
         });
       }
     },
@@ -102,8 +140,35 @@ export default {
     },
 
     handleAdd() {
-      this.$emit('add', this.addTitle);
+      this.$emit('add', {
+        name: this.addName,
+        key_name: this.addKeyName,
+        value_name: this.addValueName,
+        default_type: this.addDefaultType,
+        default_data: this.addDefaultData,
+        target_type: this.addTargetType,
+        target_data: this.addTargetData,
+      });
       this.addModalVisible = false;
+    },
+
+    clearAddData() {
+      this.addName = '';
+      this.addKeyName = '';
+      this.addValueName = '';
+      this.addDefaultType = 'REG_SZ';
+      this.addDefaultData = '';
+      this.addTargetType = 'REG_SZ';
+      this.addTargetData = '';
+    },
+
+    handleAutoRenew() {
+      if (this.addKeyName && this.addValueName) {
+        registry.get(this.addKeyName, this.addValueName).then(res => {
+          this.addDefaultType = res[2];
+          this.addDefaultData = res[3];
+        });
+      }
     },
   },
 };
@@ -208,22 +273,104 @@ export default {
   .add-modal {
     z-index: 10;
 
-    .add-input-wrapper {
-      .add-input {
-        height: 38px;
-        width: 100%;
-        border: 0;
-        border-bottom: 1px solid #e6e6e6;
-        padding: 0 5px;
-        outline: none;
-        color: #333;
+    .add-modal-wrapper {
+      .add-input-wrapper {
+        margin-bottom: 10px;
+        position: relative;
 
+        .label {
+          display: inline-block;
+          width: 80px;
+          text-align: right;
+          font-size: 11px;
+          margin-right: 8px;
+          color: #64748B;
+        }
 
-        &::placeholder {
-          color: #999;
+        .select {
+          width: 80px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: inline-block;
+          border: 0;
+          border-bottom: 1px solid #e2e2e2;
+          height: 30px;
+          outline: none;
+          color: #64748B;
+          font-weight: bold;
+          font-size: 12px;
+          background-color: transparent;
+          transition: all .2s ease-in-out;
+          cursor: pointer;
+
+          &:focus {
+            border-bottom: 1px solid #036672;
+            transition: all .2s ease-in-out;
+          }
+        }
+
+        .select+.add-input {
+          width: calc(100% - 178px);
+          margin-left: 10px;
+        }
+
+        .add-input {
+          height: 30px;
+          line-height: 30px;
+          width: calc(100% - 88px);
+          border: 0;
+          border-bottom: 1px solid #e6e6e6;
+          padding: 0 5px;
+          outline: none;
+          color: #333;
+          color: #64748B;
+          font-weight: bold;
+          font-size: 12px;
+          transition: all .2s ease-in-out;
+
+          &:focus {
+            border-bottom: 1px solid #036672;
+            transition: all .2s ease-in-out;
+          }
+
+          &::placeholder {
+            color: #64748B;
+            opacity: .25;
+            font-weight: normal;
+          }
+        }
+
+        .autorenew-button {
+          outline: none;
+          border: 0;
+          cursor: pointer;
+          background-color: transparent;
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 30px;
+          height: 30px;
+
+          &:hover {
+            .icon-autorenew {
+              filter: brightness(0);
+              opacity: .6;
+            }
+          }
+
+          .icon-autorenew {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            background-image: url('../../assets/images/icon/icon-autorenew.svg');
+            background-repeat: no-repeat;
+            background-size: 16px 16px;
+            background-position: center center;
+          }
         }
       }
     }
+
   }
 }
 </style>
