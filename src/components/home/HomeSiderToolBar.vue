@@ -9,8 +9,8 @@
 
     <div class="menu" v-show="showMenu">
       <ul class="menu-list">
-        <li class="menu-item">Export</li>
-        <li class="menu-item">Import</li>
+        <li class="menu-item" @click="handleExportClick">Export</li>
+        <li class="menu-item" @click="handleImportClick">Import</li>
         <li class="menu-item">Language</li>
         <li class="menu-item" @click="handleAboutClick">About</li>
       </ul>
@@ -20,6 +20,7 @@
 
 <script>
 import registry from '../../utils/registry';
+import { remote } from 'electron';
 
 export default {
   name: 'HomeSiderToolBar',
@@ -39,6 +40,24 @@ export default {
   methods: {
     handleRefresh() {
       registry.open();
+    },
+
+    handleExportClick() {
+      remote.dialog.showOpenDialog({
+        properties: ['openDirectory'],
+      }).then(result => {
+        if (result.canceled) return;
+        this.$emit('export', result.filePaths[0]);
+      });
+    },
+
+    handleImportClick() {
+      remote.dialog.showOpenDialog({
+        properties: ['openFile'],
+      }).then(result => {
+        if (result.canceled) return;
+        this.$emit('import', result.filePaths[0]);
+      });
     },
 
     handleAboutClick() {

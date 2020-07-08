@@ -1,6 +1,6 @@
 'use strict';
 
-import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
+import { app, protocol, BrowserWindow, dialog, ipcMain } from 'electron';
 import {
   createProtocol,
   /* installVueDevtools */
@@ -15,7 +15,6 @@ let win;
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }]);
 
 function createWindow () {
-  // Menu.setApplicationMenu(null);
   // Create the browser window.
   win = new BrowserWindow({
     width: 800,
@@ -112,4 +111,14 @@ ipcMain.on('window-maximize', () => {
 
 ipcMain.on('window-close', () => {
   win.close();
+});
+
+ipcMain.on('open-directory-dialog', (event, p) => {
+  dialog.showOpenDialog({
+    properties: [p],
+  }, files => {
+    if (files) {
+      event.sender.send('selectedItem', files[0]);
+    }
+  });
 });

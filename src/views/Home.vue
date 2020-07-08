@@ -8,6 +8,8 @@
           @activeChange="handleActiveChange"
           @openChange="handleOpenChange"
           @add="handleAdd"
+          @import="handleImport"
+          @export="handleExport"
         />
       </div>
       <div class="main">
@@ -38,6 +40,7 @@ import HomeMainEmpty from '../components/home/HomeMainEmpty.vue';
 import registry from '../utils/registry';
 import storage from '../utils/storage';
 import { v4 as uuidv4 } from 'uuid';
+import fs from 'fs';
 
 export default {
   name: 'Home',
@@ -160,6 +163,31 @@ export default {
 
     updateStorage() {
       storage.set('SWITCH_REGISTRY_LIST', this.list);
+    },
+
+    handleImport(path) {
+      fs.readFile(path, 'utf8', (err, dataStr) => {
+        if (err) throw err;
+        if (dataStr) {
+          const data = JSON.parse(dataStr);
+          if (data.data) {
+            this.list = data.data;
+            this.updateStorage();
+            alert('Import successfully.');
+          }
+        }
+      });
+    },
+
+    handleExport(path) {
+      const content = JSON.stringify({
+        version: require('../../package.json').version,
+        data: this.list,
+      });
+      fs.writeFile(`${path}\\switch_registry_data_${Date.now()}.json`, content, 'utf8', err => {
+        if (err) throw err;
+        alert('Export successfully');
+      });
     },
   },
 };

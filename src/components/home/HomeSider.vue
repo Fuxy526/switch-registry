@@ -22,7 +22,10 @@
         </li>
       </ul>
     </div>
-    <home-sider-tool-bar />
+    <home-sider-tool-bar
+      @import="handleImport"
+      @export="handleExport"
+    />
 
     <modal
       class="add-modal"
@@ -169,6 +172,14 @@ export default {
           this.addDefaultData = res[3];
         });
       }
+    },
+
+    handleImport(path) {
+      this.$emit('import', path);
+    },
+
+    handleExport(path) {
+      this.$emit('export', path);
     },
   },
 };
