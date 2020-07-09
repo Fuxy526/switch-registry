@@ -30,7 +30,7 @@ export default {
     },
 
     handleClose() {
-      ipcRenderer.send('window-cloes');
+      ipcRenderer.send('window-close');
     },
   },
 };
