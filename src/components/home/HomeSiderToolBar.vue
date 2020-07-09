@@ -11,6 +11,7 @@
       <ul class="menu-list">
         <li class="menu-item" @click="handleExportClick">Export</li>
         <li class="menu-item" @click="handleImportClick">Import</li>
+        <li class="menu-item" @click="handleRegeditClick">Regedit</li>
         <li class="menu-item" @click="handleAboutClick">About</li>
       </ul>
     </div>
@@ -19,6 +20,7 @@
 
 <script>
 import { remote } from 'electron';
+import registry from '../../utils/registry';
 
 export default {
   name: 'HomeSiderToolBar',
@@ -56,6 +58,10 @@ export default {
         if (result.canceled) return;
         this.$emit('import', result.filePaths[0]);
       });
+    },
+
+    handleRegeditClick() {
+      registry.open();
     },
 
     handleAboutClick() {

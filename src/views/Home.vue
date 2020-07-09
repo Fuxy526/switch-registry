@@ -198,7 +198,7 @@ export default {
           cancelText: 'Finish',
           okText: 'Show in folder',
           onOk: () => {
-            exec(`explorer.exe /select,"${fullPath}"`);
+            exec(`explorer /select,"${fullPath}"`);
           },
         });
       });

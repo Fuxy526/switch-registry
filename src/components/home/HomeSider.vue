@@ -59,7 +59,7 @@
           <select class="select" v-model="addDefaultType">
             <option class="option" v-for="item in types" :key="item" :name="item">{{ item }}</option>
           </select>
-          <input class="add-input" type="text" placeholder="Please enter default data" v-model="addDefaultData" />
+          <input class="add-input suffix-input" type="text" placeholder="Please enter default data" v-model="addDefaultData" />
           <button class="autorenew-button" @click="handleAutoRenew">
             <i class="icon-autorenew"></i>
           </button>
@@ -414,6 +414,10 @@ export default {
             opacity: .25;
             font-weight: normal;
           }
+        }
+
+        .suffix-input {
+          padding: 0 30px 0 5px;
         }
 
         .autorenew-button {
