@@ -3,14 +3,14 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import Bus from './plugins/bus';
-import ToggleButton from 'vue-js-toggle-button';
+import Message from './plugins/message';
 import Modal from '@fuxy526/vue-modal';
 import './assets/styles/modal/modal-switch-registry.scss';
 
 Vue.config.productionTip = false;
 
 Vue.use(Bus);
-Vue.use(ToggleButton);
+Vue.use(Message);
 Vue.use(Modal, {
   skin: 'switch-registry',
   width: 360,

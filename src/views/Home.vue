@@ -41,6 +41,7 @@ import registry from '../utils/registry';
 import storage from '../utils/storage';
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs';
+import { exec } from 'child_process';
 
 export default {
   name: 'Home',
@@ -72,7 +73,6 @@ export default {
   },
 
   mounted() {
-    // storage.delete('SWITCH_REGISTRY_LIST');
     const stored = storage.get('SWITCH_REGISTRY_LIST');
     if (stored) {
       this.list = stored;
@@ -173,7 +173,11 @@ export default {
           if (data.data) {
             this.list = data.data;
             this.updateStorage();
-            alert('Import successfully.');
+            this.$modal.show({
+              title: 'Import',
+              content: 'Import successfully.',
+              cancelText: '',
+            });
           }
         }
       });
@@ -184,9 +188,18 @@ export default {
         version: require('../../package.json').version,
         data: this.list,
       });
-      fs.writeFile(`${path}\\switch_registry_data_${Date.now()}.json`, content, 'utf8', err => {
+      const fullPath = `${path}\\switch_registry_data_${Date.now()}.json`;
+      fs.writeFile(fullPath, content, 'utf8', err => {
         if (err) throw err;
-        alert('Export successfully');
+        this.$modal.show({
+          title: 'Export',
+          content: 'Export successfully.',
+          cancelText: 'Finish',
+          okText: 'Show in folder',
+          onOk: () => {
+            exec(`explorer.exe /select,"${fullPath}"`);
+          },
+        });
       });
     },
   },

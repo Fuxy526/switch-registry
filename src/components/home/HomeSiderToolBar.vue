@@ -1,7 +1,7 @@
 <template>
   <div class="home-sider-tool-bar">
     <button class="icon-btn" @click.stop="showMenu = true">
-      <i class="icon icon-setting"></i>
+      <i class="icon icon-menu"></i>
     </button>
     <button class="icon-btn right" @click="handleUpdate">
       <i class="icon icon-update"></i>
@@ -111,8 +111,8 @@ export default {
       background-image: url('../../assets/images/icon/icon-update.svg');
     }
 
-    .icon-setting {
-      background-image: url('../../assets/images/icon/icon-setting.svg');
+    .icon-menu {
+      background-image: url('../../assets/images/icon/icon-menu.svg');
     }
   }
 

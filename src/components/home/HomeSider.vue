@@ -47,11 +47,11 @@
         </div>
         <div class="add-input-wrapper">
           <label class="label">KEY NAME</label>
-          <input class="add-input" type="text" placeholder="Please enter key name" v-model="addKeyName" />
+          <input ref="addKeyNameInput" class="add-input" type="text" placeholder="Please enter key name" v-model="addKeyName" />
         </div>
         <div class="add-input-wrapper">
           <label class="label">VALUE NAME</label>
-          <input class="add-input" type="text" placeholder="Please enter value name" v-model="addValueName" />
+          <input ref="addValueNameInput" class="add-input" type="text" placeholder="Please enter value name" v-model="addValueName" />
         </div>
         <div class="add-input-wrapper">
           <label class="label">DEFAULT DATA</label>
@@ -174,6 +174,21 @@ export default {
     },
 
     handleAdd() {
+      if (!this.addName.trim()) {
+        this.$message('Please fill in NAME.');
+        this.$refs.addNameInput.focus();
+        return;
+      }
+      if (!this.addKeyName.trim()) {
+        this.$message('Please fill in KEY NAME.');
+        this.$refs.addKeyNameInput.focus();
+        return;
+      }
+      if (!this.addValueName.trim()) {
+        this.$message('Please fill in VALUE NAME.');
+        this.$refs.addValueNameInput.focus();
+        return;
+      }
       this.$emit('add', {
         name: this.addName,
         key_name: this.addKeyName,
