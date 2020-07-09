@@ -10,6 +10,8 @@
           @add="handleAdd"
           @import="handleImport"
           @export="handleExport"
+          @rename="handleRename"
+          @delete="handleDelete"
         />
       </div>
       <div class="main">
@@ -24,8 +26,6 @@
           :targetType="activeItem.target_type"
           :targetData="activeItem.target_data"
           @dataChange="handleDataChange"
-          @rename="handleRename"
-          @delete="handleDelete"
         />
         <home-main-empty v-else />
       </div>

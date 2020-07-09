@@ -7,10 +7,6 @@
           <span class="status-open" v-if="open">open</span>
           <span class="status-close" v-else>closed</span>
         </div>
-        <!-- <div class="buttons-wrapper">
-          <button class="button button-rename" @click="renameModalVisible = true">Rename</button>
-          <button class="button button-delete" @click="handleDeleteClick">Delete</button>
-        </div> -->
       </div>
 
       <div class="content">
@@ -38,21 +34,6 @@
         </div>
       </div>
     </div>
-
-    <modal
-      class="rename-modal"
-      skin="switch-registry"
-      title="Rename"
-      okText="Rename"
-      :width="360"
-      :visible="renameModalVisible"
-      @onCancel="renameModalVisible = false"
-      @onOk="handleRename"
-    >
-      <div class="rename-input-wrapper">
-        <input ref="renameInput" class="rename-input" type="text" placeholder="Please enter title" v-model="newName" />
-      </div>
-    </modal>
   </div>
 </template>
 
@@ -103,19 +84,6 @@ export default {
     },
   },
 
-  watch: {
-    renameModalVisible(value) {
-      if (value) {
-        this.newName = this.name;
-        this.$nextTick(() => {
-          this.$refs.renameInput.focus();
-        });
-      } else {
-        this.newName = '';
-      }
-    },
-  },
-
   methods: {
     handleKeyNameChange(e) {
       this.$emit('dataChange', 'key_name', e.target.value);
@@ -140,30 +108,13 @@ export default {
     handleTargetDataChange(e) {
       this.$emit('dataChange', 'target_data', e.target.value);
     },
-
-    handleRename() {
-      this.$emit('rename', this.newName);
-      this.renameModalVisible = false;
-    },
-
-    handleDeleteClick() {
-      this.$modal.show({
-        title: 'Delete',
-        content: 'Are you sure to delete this item?',
-        description: 'The operation cannot be restored.',
-        okText: 'Delete',
-        onOk: () => {
-          this.$emit('delete');
-        },
-      });
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .home-main {
-  background-color: #F1F5F9;
+  background-color: #fff;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -172,22 +123,29 @@ export default {
   overflow: auto;
   border: 1px solid #D9D9D9;
   border-left: 0;
+  padding: 26px 0 0;
 
   .title-bar {
     background-color: #fff;
-    padding: 12px 20px 0;
+    padding: 0 20px 0;
     border-bottom: 1px solid #eee;
 
     .title-wrapper {
       display: inline-block;
-      width: calc(100% - 170px);
-      line-height: 24px;
-      padding: 14px 0;
+      width: 100%;
+      line-height: 28px;
+      height: 38px;
 
       .title {
+        display: inline-block;
+        vertical-align: middle;
         font-size: 16px;
         font-weight: bold;
         color: #1A202C;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: calc(100% - 60px);
       }
 
       .status-open,
@@ -212,56 +170,16 @@ export default {
         color: #03543f;
       }
     }
-
-    .buttons-wrapper {
-      float: right;
-      height: 54px;
-      line-height: 54px;
-
-      .button {
-        height: 26px;
-        padding: 0 10px;
-        cursor: pointer;
-        background-color: #fff;
-        border: 1px solid rgba(0, 0, 0, .15);
-        border-radius: 4px;
-        outline: none;
-        color: #999;
-        font-size: 12px;
-
-        &:hover {
-          border: 1px solid rgba(0, 0, 0, .2);
-        }
-
-        &:before {
-          content: '';
-          display: inline-block;
-          vertical-align: -1px;
-          background-repeat: no-repeat;
-          background-size: 100% 100%;
-          margin-right: 4px;
-          width: 12px;
-          height: 12px;
-        }
-      }
-
-      .button-rename {
-        margin-right: 8px;
-
-        &:before {
-          background-image: url('../../assets/images/icon/icon-rename.svg');
-        }
-      }
-
-      .button-delete {
-        &:before {
-          background-image: url('../../assets/images/icon/icon-delete.svg');
-        }
-      }
-    }
   }
 
   .content {
+    position: absolute;
+    top: 65px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    background-color: #F1F5F9;
     padding: 20px 30px 20px 25px;
 
     .form-group {
@@ -322,26 +240,6 @@ export default {
           color: #64748B;
           opacity: .25;
           font-weight: normal;
-        }
-      }
-    }
-  }
-
-  .rename-modal {
-    z-index: 10;
-
-    .rename-input-wrapper {
-      .rename-input {
-        height: 32px;
-        width: 100%;
-        border: 1px solid rgba(0, 0, 0, .2);
-        padding: 0 8px;
-        border-radius: 2px;
-        outline: none;
-        color: #333;
-
-        &::placeholder {
-          color: #999;
         }
       }
     }

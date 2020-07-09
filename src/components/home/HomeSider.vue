@@ -18,6 +18,8 @@
             :open="item.open"
             @click.native="handleItemClick(item)"
             @openChange="v => handleItemOpenChange(item, v)"
+            @rename="renameModalVisible = true"
+            @delete="handleDelete(item)"
           />
         </li>
       </ul>
@@ -70,6 +72,21 @@
         </div>
       </div>
     </modal>
+
+    <modal
+      class="rename-modal"
+      skin="switch-registry"
+      title="Rename"
+      okText="Rename"
+      :width="360"
+      :visible="renameModalVisible"
+      @onCancel="renameModalVisible = false"
+      @onOk="handleRename"
+    >
+      <div class="rename-input-wrapper">
+        <input ref="renameInput" class="rename-input" type="text" placeholder="Please enter name" v-model="renameName" />
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -103,6 +120,8 @@ export default {
       addName: '',
       addKeyName: '',
       addValueName: '',
+      renameModalVisible: false,
+      renameName: '',
       addDefaultType: 'REG_SZ',
       addDefaultData: '',
       addTargetType: 'REG_SZ',
@@ -125,6 +144,17 @@ export default {
         this.$nextTick(() => {
           this.$refs.addNameInput.focus();
         });
+      }
+    },
+
+    renameModalVisible(value) {
+      if (value) {
+        this.renameName = this.list.filter(item => item.id === this.activeId)[0].name;
+        this.$nextTick(() => {
+          this.$refs.renameInput.focus();
+        });
+      } else {
+        this.renameName = '';
       }
     },
   },
@@ -180,6 +210,23 @@ export default {
 
     handleExport(path) {
       this.$emit('export', path);
+    },
+
+    handleRename() {
+      this.$emit('rename', this.renameName);
+      this.renameModalVisible = false;
+    },
+
+    handleDelete(item) {
+      this.$modal.show({
+        title: 'Delete',
+        content: `Are you sure to delete ${item.name}?`,
+        description: 'The operation can not be restored.',
+        okText: 'Delete',
+        onOk: () => {
+          this.$emit('delete');
+        },
+      });
     },
   },
 };
@@ -381,7 +428,38 @@ export default {
         }
       }
     }
+  }
 
+  .rename-modal {
+    z-index: 10;
+
+    .rename-input-wrapper {
+      .rename-input {
+        height: 30px;
+        line-height: 30px;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #e6e6e6;
+        padding: 0 5px;
+        outline: none;
+        color: #333;
+        color: #64748B;
+        font-weight: bold;
+        font-size: 12px;
+        transition: all .2s ease-in-out;
+
+        &:focus {
+          border-bottom: 1px solid #036672;
+          transition: all .2s ease-in-out;
+        }
+
+        &::placeholder {
+          color: #64748B;
+          opacity: .25;
+          font-weight: normal;
+        }
+      }
+    }
   }
 }
 </style>
