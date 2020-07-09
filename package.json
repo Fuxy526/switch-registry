@@ -1,6 +1,8 @@
 {
   "name": "switch-registry",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Switch registry on windows.",
+  "author": "Fuxy526<261867120@qq.com>",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

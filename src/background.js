@@ -5,6 +5,7 @@ import {
   createProtocol,
   /* installVueDevtools */
 } from 'vue-cli-plugin-electron-builder/lib';
+import path from 'path';
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -20,6 +21,7 @@ function createWindow () {
     width: 800,
     height: 500,
     frame: false,
+    icon: path.join(__static, 'favicon.ico'),
     // transparent: true,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
