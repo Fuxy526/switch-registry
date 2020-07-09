@@ -11,7 +11,6 @@
       <ul class="menu-list">
         <li class="menu-item" @click="handleExportClick">Export</li>
         <li class="menu-item" @click="handleImportClick">Import</li>
-        <li class="menu-item">Language</li>
         <li class="menu-item" @click="handleAboutClick">About</li>
       </ul>
     </div>
@@ -19,7 +18,6 @@
 </template>
 
 <script>
-import registry from '../../utils/registry';
 import { remote } from 'electron';
 
 export default {
@@ -39,7 +37,7 @@ export default {
 
   methods: {
     handleUpdate() {
-      registry.open();
+      this.$emit('update');
     },
 
     handleExportClick() {

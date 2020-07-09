@@ -20,7 +20,7 @@ class Registry {
           reject(err);
           return;
         }
-        const res = stdout.split(' ').filter(item => item !== '');
+        const res = stdout.split('    ').filter(item => item !== '').map(item => item.trim());
         resolve(res);
       });
     });

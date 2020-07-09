@@ -12,6 +12,7 @@
           @export="handleExport"
           @rename="handleRename"
           @delete="handleDelete"
+          @update="handleUpdate"
         />
       </div>
       <div class="main">
@@ -201,6 +202,24 @@ export default {
           },
         });
       });
+    },
+
+    async handleUpdate() {
+      for (let i = 0, l = this.list.length; i < l; i++) {
+        const item = this.list[i];
+        try {
+          const res = await registry.get(item.key_name, item.value_name);
+          if (res[2] === item.target_type && res[3] === item.target_data) {
+            item.open = true;
+          } else {
+            item.open = false;
+          }
+        } catch (err) {
+          item.open = false;
+        }
+      }
+      this.updateStorage();
+      this.$message('Updated.');
     },
   },
 };

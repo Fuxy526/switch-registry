@@ -27,6 +27,7 @@
     <home-sider-tool-bar
       @import="handleImport"
       @export="handleExport"
+      @update="$emit('update')"
     />
 
     <modal
