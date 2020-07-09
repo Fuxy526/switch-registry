@@ -129,6 +129,7 @@ export default {
     background-color: #fff;
     padding: 0 20px 0;
     border-bottom: 1px solid #eee;
+    -webkit-app-region: drag;
 
     .title-wrapper {
       display: inline-block;

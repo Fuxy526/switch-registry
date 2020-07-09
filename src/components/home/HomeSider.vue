@@ -79,12 +79,13 @@
       title="Rename"
       okText="Rename"
       :width="360"
+      :overlayClosable="false"
       :visible="renameModalVisible"
       @onCancel="renameModalVisible = false"
       @onOk="handleRename"
     >
       <div class="rename-input-wrapper">
-        <input ref="renameInput" class="rename-input" type="text" placeholder="Please enter name" v-model="renameName" />
+        <input ref="renameInput" class="rename-input" type="text" placeholder="Please enter name" v-model="renameName" @keyup.enter="handleRename" />
       </div>
     </modal>
   </div>
@@ -239,11 +240,12 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  overflow: hidden;;
+  overflow: hidden;
   background-color: #036672;
+  padding: 26px 0 0;
 
   .search-section {
-    padding: 26px 10px 0;
+    padding: 0 10px;
     height: 65px;
 
     .search-input-wrapper {
