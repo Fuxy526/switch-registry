@@ -3,8 +3,8 @@
     <button class="icon-btn" @click.stop="showMenu = true">
       <i class="icon icon-setting"></i>
     </button>
-    <button class="icon-btn right" @click="handleRefresh">
-      <i class="icon icon-refresh"></i>
+    <button class="icon-btn right" @click="handleUpdate">
+      <i class="icon icon-update"></i>
     </button>
 
     <div class="menu" v-show="showMenu">
@@ -38,7 +38,7 @@ export default {
   },
 
   methods: {
-    handleRefresh() {
+    handleUpdate() {
       registry.open();
     },
 
@@ -104,11 +104,11 @@ export default {
       height: 35px;
       width: 20px;
       background-position: center center;
+      opacity: .9;
     }
 
-    .icon-refresh {
-      width: 17px;
-      background-image: url('../../assets/images/icon/icon-refresh.svg');
+    .icon-update {
+      background-image: url('../../assets/images/icon/icon-update.svg');
     }
 
     .icon-setting {
