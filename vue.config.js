@@ -5,4 +5,11 @@ module.exports = {
   devServer: {
     port: 10086,
   },
+  pluginOptions: {
+    electronBuilder: {
+      builderOptions: {
+        productName: 'SwitchRegistry',
+      },
+    },
+  },
 };
