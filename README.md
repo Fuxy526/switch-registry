@@ -6,6 +6,11 @@ Manage and switch registry quickly on windows.
 
 ![](screenshot.png)
 
+## Features
+
+- Manage registry
+- Switch registry quickly
+
 ## Download
 
 [SwitchRegistry Download Page (Github release)](https://github.com/Fuxy526/switch-registry/releases)
