@@ -10,8 +10,20 @@
       </button>
     </div>
     <div class="home-sider-list-wrapper">
-      <ul class="home-sider-list">
-        <li class="home-sider-list-item" v-for="(item, index) in filterdList" :key="`sider_item_${index + 1}`">
+      <slick-list
+        class="home-sider-list"
+        lockAxis="y"
+        :value="filterdList"
+        :pressDelay="200"
+        @input="handleSortInput"
+      >
+        <slick-item
+          class="home-sider-list-item"
+          v-for="(item, index) in filterdList"
+          :key="`sider_item_${index + 1}`"
+          :index="index"
+          :disabled="!!searchText"
+        >
           <home-sider-item
             :active="item.id === activeId"
             :name="item.name"
@@ -21,8 +33,8 @@
             @rename="renameModalVisible = true"
             @delete="handleDelete(item)"
           />
-        </li>
-      </ul>
+        </slick-item>
+      </slick-list>
     </div>
     <home-sider-tool-bar
       @import="handleImport"
@@ -93,6 +105,7 @@
 </template>
 
 <script>
+import { SlickList, SlickItem } from 'vue-slicksort';
 import HomeSiderItem from './HomeSiderItem.vue';
 import HomeSiderToolBar from './HomeSiderToolBar.vue';
 import registry from '../../utils/registry';
@@ -102,6 +115,8 @@ export default {
   components: {
     HomeSiderItem,
     HomeSiderToolBar,
+    SlickList,
+    SlickItem,
   },
 
   props: {
@@ -245,6 +260,10 @@ export default {
         },
       });
     },
+
+    handleSortInput(data) {
+      this.$emit('sort', data);
+    },
   },
 };
 </script>
@@ -326,7 +345,7 @@ export default {
       }
 
       &:hover {
-        background-color: rgba(0, 0, 0, .15);
+        background-color: rgba(0, 0, 0, .2);
       }
     }
   }
@@ -334,7 +353,7 @@ export default {
   .home-sider-list-wrapper {
     position: absolute;
     top: 65px;
-    bottom: 30px;
+    bottom: 35px;
     left: 0;
     right: 0;
     overflow: auto;

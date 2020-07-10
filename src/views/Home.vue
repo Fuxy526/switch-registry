@@ -13,6 +13,7 @@
           @rename="handleRename"
           @delete="handleDelete"
           @update="handleUpdate"
+          @sort="handleSort"
         />
       </div>
       <div class="main">
@@ -224,6 +225,11 @@ export default {
       }
       this.updateStorage();
       this.$message('Updated.');
+    },
+
+    handleSort(list) {
+      this.list = list;
+      this.updateStorage();
     },
   },
 };

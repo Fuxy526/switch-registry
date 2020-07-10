@@ -3,7 +3,7 @@
     <i class="icon-doc"></i>
     <span class="name">{{ name }}</span>
     <span class="right-part">
-      <i class="icon-more" @click.stop="showMenu = true"></i>
+      <i class="icon-more" @click.stop="showMenu = !showMenu"></i>
       <common-switch
         :on="open"
         @change="handleSwitchChange"

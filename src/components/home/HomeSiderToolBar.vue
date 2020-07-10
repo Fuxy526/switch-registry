@@ -1,6 +1,6 @@
 <template>
   <div class="home-sider-tool-bar">
-    <button class="icon-btn" @click.stop="showMenu = true">
+    <button class="icon-btn" @click.stop="showMenu = !showMenu">
       <i class="icon icon-menu"></i>
     </button>
     <button class="icon-btn right" @click="handleUpdate">
@@ -156,7 +156,7 @@ export default {
       list-style-type: none;
       margin: 0;
       padding: 0;
-      background-color: rgba(0, 0, 0, .25);
+      background-color: #024D56;
       color: rgba(255, 255, 255, .8);
       width: 100px;
       border-radius: 2px;

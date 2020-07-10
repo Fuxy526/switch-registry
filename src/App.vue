@@ -42,4 +42,17 @@ body {
   right: 0;
   overflow: hidden;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, .15);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 </style>
