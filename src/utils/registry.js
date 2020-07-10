@@ -37,6 +37,18 @@ class Registry {
       });
     });
   }
+
+  delete(keyName, valueName) {
+    return new Promise((resolve, reject) => {
+      cp.exec(`REG DELETE "${keyName}" /v "${valueName}" /f`, (err, stdout) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(stdout);
+      });
+    });
+  }
 }
 
 export default new Registry();

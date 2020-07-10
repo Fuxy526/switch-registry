@@ -23,14 +23,14 @@
           <select class="select" :value="defaultType" @change="handleDefaultTypeChange">
             <option class="option" v-for="item in types" :key="item" :name="item">{{ item }}</option>
           </select>
-          <input class="input" type="text" placeholder="Please enter default data" :value="defaultData" @change="handleDefaultDataChange" />
+          <input class="input" type="text" placeholder="Please enter default data" :value="defaultData" @change="handleDefaultDataChange" v-show="defaultType !== 'NONE'" />
         </div>
         <div class="form-group">
           <label class="label">TARGET DATA</label>
           <select class="select" :value="targetType" @change="handleTargetTypeChange">
             <option class="option" v-for="item in types" :key="item" :name="item">{{ item }}</option>
           </select>
-          <input class="input" type="text" placeholder="Please enter target data" :value="targetData" @change="handleTargetDataChange" />
+          <input class="input" type="text" placeholder="Please enter target data" :value="targetData" @change="handleTargetDataChange" v-show="targetType !== 'NONE'" />
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@ export default {
     return {
       renameModalVisible: false,
       newName: '',
-      types: ['REG_SZ', 'REG_MULTI_SZ', 'REG_DWORD_BIG_ENDIAN', 'REG_DWORD', 'REG_BINARY', 'REG_DWORD_LITTLE_ENDIAN', 'REG_LINK', 'REG_FULL_RESOURCE_DESCRIPTOR', 'REG_EXPAND_SZ'],
+      types: ['NONE', 'REG_SZ', 'REG_MULTI_SZ', 'REG_DWORD_BIG_ENDIAN', 'REG_DWORD', 'REG_BINARY', 'REG_DWORD_LITTLE_ENDIAN', 'REG_LINK', 'REG_FULL_RESOURCE_DESCRIPTOR', 'REG_EXPAND_SZ'],
     };
   },
 

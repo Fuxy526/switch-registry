@@ -115,6 +115,16 @@ export default {
       const data = open ? target_data : default_data;
       item.open = open;
 
+      if (type === 'NONE') {
+        registry.delete(key_name, value_name).then(() => {
+          this.updateStorage();
+        }).catch(() => {
+          item.open = false;
+          this.$message('Error, please check the config.');
+        });
+        return;
+      }
+
       registry.add(key_name, value_name, type, data).then(() => {
         this.updateStorage();
       }).catch(() => {

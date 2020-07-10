@@ -59,8 +59,8 @@
           <select class="select" v-model="addDefaultType">
             <option class="option" v-for="item in types" :key="item" :name="item">{{ item }}</option>
           </select>
-          <input class="add-input suffix-input" type="text" placeholder="Please enter default data" v-model="addDefaultData" />
-          <button class="autorenew-button" @click="handleAutoRenew">
+          <input class="add-input suffix-input" type="text" placeholder="Please enter default data" v-model="addDefaultData" v-show="addDefaultType !== 'NONE'" />
+          <button class="autorenew-button" @click="handleAutoRenew" v-show="addDefaultType !== 'NONE'">
             <i class="icon-autorenew"></i>
           </button>
         </div>
@@ -69,7 +69,7 @@
           <select class="select" v-model="addTargetType">
             <option class="option" v-for="item in types" :key="item" :name="item">{{ item }}</option>
           </select>
-          <input class="add-input" type="text" placeholder="Please enter target data" v-model="addTargetData" />
+          <input class="add-input" type="text" placeholder="Please enter target data" v-model="addTargetData" v-show="addTargetType !== 'NONE'" />
         </div>
       </div>
     </modal>
@@ -128,7 +128,7 @@ export default {
       addDefaultData: '',
       addTargetType: 'REG_SZ',
       addTargetData: '',
-      types: ['REG_SZ', 'REG_MULTI_SZ', 'REG_DWORD_BIG_ENDIAN', 'REG_DWORD', 'REG_BINARY', 'REG_DWORD_LITTLE_ENDIAN', 'REG_LINK', 'REG_FULL_RESOURCE_DESCRIPTOR', 'REG_EXPAND_SZ'],
+      types: ['NONE', 'REG_SZ', 'REG_MULTI_SZ', 'REG_DWORD_BIG_ENDIAN', 'REG_DWORD', 'REG_BINARY', 'REG_DWORD_LITTLE_ENDIAN', 'REG_LINK', 'REG_FULL_RESOURCE_DESCRIPTOR', 'REG_EXPAND_SZ'],
     };
   },
 

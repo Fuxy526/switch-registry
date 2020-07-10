@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { remote } from 'electron';
+import { remote, shell } from 'electron';
 import registry from '../../utils/registry';
 import { version, author } from '../../../package.json';
 
@@ -89,12 +89,11 @@ export default {
     },
 
     handleAboutClick() {
-      console.log(1);
       this.aboutModalVisible = true;
     },
 
     handleCheckUpdate() {
-
+      shell.openExternal('https://github.com/Fuxy526/switch-registry/releases');
     },
   },
 };
