@@ -20,6 +20,8 @@ function createWindow () {
   win = new BrowserWindow({
     width: 800,
     height: 500,
+    minWidth: 500,
+    minHeight: 400,
     frame: false,
     icon: path.join(__static, 'favicon.ico'),
     // transparent: true,
