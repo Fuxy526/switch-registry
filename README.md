@@ -1,24 +1,14 @@
-# switch-registry
+# SwitchRegistry
 
-## Project setup
-```
-npm install
-```
+Manage and switch registry quickly on windows.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Screenshot
 
-### Compiles and minifies for production
-```
-npm run build
-```
+![](screenshot.png)
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Download
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[SwitchRegistry Download Page (Github release)](https://github.com/Fuxy526/switch-registry/releases)
+
+## Copyright
+SwitchRegistry is a free and open source software, it is released under the MIT license.
