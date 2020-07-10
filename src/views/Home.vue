@@ -117,15 +117,9 @@ export default {
 
       registry.add(key_name, value_name, type, data).then(() => {
         this.updateStorage();
-      }).catch(err => {
-        console.log('error: ', err);
+      }).catch(() => {
         item.open = false;
-        this.$modal.show({
-          title: 'Warning',
-          content: 'The key name is invalid.',
-          description: 'Please modify the config and retry.',
-          cancelText: '',
-        });
+        this.$message('Error, please check the config.');
       });
     },
 

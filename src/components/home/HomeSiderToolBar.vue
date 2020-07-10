@@ -15,12 +15,33 @@
         <li class="menu-item" @click="handleAboutClick">About</li>
       </ul>
     </div>
+
+    <modal
+      class="about-modal"
+      title="About"
+      skin="switch-registry"
+      cancelText=""
+      :width="360"
+      :visible="aboutModalVisible"
+      :footer="null"
+      @onCancel="aboutModalVisible = false"
+    >
+      <div class="about-modal-wrapper">
+        <div class="about-item">Version: {{ version }}</div>
+        <div class="about-item">Author: {{ author }}</div>
+        <div class="about-footer">
+          <div class="link" @click="handleCheckUpdate">Check update</div>
+          <button class="ok-btn" @click="aboutModalVisible = false">OK</button>
+        </div>
+      </div>
+    </modal>
   </div>
 </template>
 
 <script>
 import { remote } from 'electron';
 import registry from '../../utils/registry';
+import { version, author } from '../../../package.json';
 
 export default {
   name: 'HomeSiderToolBar',
@@ -28,6 +49,9 @@ export default {
   data() {
     return {
       showMenu: false,
+      version: version,
+      author: author,
+      aboutModalVisible: false,
     };
   },
 
@@ -65,12 +89,12 @@ export default {
     },
 
     handleAboutClick() {
-      this.$modal.show({
-        title: 'About',
-        content: `Version: ${require('../../../package.json').version}`,
-        description: 'Author: Fuxy526',
-        cancelText: '',
-      });
+      console.log(1);
+      this.aboutModalVisible = true;
+    },
+
+    handleCheckUpdate() {
+
     },
   },
 };
@@ -150,6 +174,45 @@ export default {
           background-color: rgba(255, 255, 255, .05);
         }
       }
+    }
+  }
+
+  .about-modal {
+    .about-modal-wrapper {
+      .about-item {
+        font-size: 13px;
+        line-height: 22px;
+      }
+
+      .about-footer {
+        margin-top: 15px;
+
+        .link {
+          display: inline-block;
+          color: #036672;
+          text-decoration: underline;
+          font-size: 13px;
+          cursor: pointer;
+        }
+
+        .ok-btn {
+          height: 30px;
+          font-size: 13px;
+          min-width: 50px;
+          background-color: #036672;
+          color: #fff;
+          outline: none;
+          border: 0;
+          cursor: pointer;
+          border-radius: 2px;
+          float: right;
+
+          &:hover {
+            opacity: .9;
+          }
+        }
+      }
+
     }
   }
 }
