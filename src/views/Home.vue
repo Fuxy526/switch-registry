@@ -179,6 +179,7 @@ export default {
           if (data.data) {
             this.list = data.data;
             this.updateStorage();
+            this.handleUpdate(false);
             this.$modal.show({
               title: 'Import',
               content: 'Import successfully.',
@@ -209,7 +210,7 @@ export default {
       });
     },
 
-    async handleUpdate() {
+    async handleUpdate(showMessage = true) {
       for (let i = 0, l = this.list.length; i < l; i++) {
         const item = this.list[i];
         try {
@@ -224,7 +225,9 @@ export default {
         }
       }
       this.updateStorage();
-      this.$message('Updated.');
+      if (showMessage) {
+        this.$message('Updated.');
+      }
     },
 
     handleSort(list) {
