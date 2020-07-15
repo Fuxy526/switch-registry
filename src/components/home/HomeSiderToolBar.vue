@@ -9,10 +9,22 @@
 
     <div class="menu" v-show="showMenu">
       <ul class="menu-list">
-        <li class="menu-item" @click="handleExportClick">Export</li>
-        <li class="menu-item" @click="handleImportClick">Import</li>
-        <li class="menu-item" @click="handleRegeditClick">Regedit</li>
-        <li class="menu-item" @click="handleAboutClick">About</li>
+        <li class="menu-item" @click="handleExportClick">
+          <i class="icon icon-export"></i>
+          <span class="menu-item-text">Export</span>
+        </li>
+        <li class="menu-item" @click="handleImportClick">
+          <i class="icon icon-import"></i>
+          <span class="menu-item-text">Import</span>
+        </li>
+        <li class="menu-item" @click="handleRegeditClick">
+          <i class="icon icon-regedit"></i>
+          <span class="menu-item-text">Regedit</span>
+        </li>
+        <li class="menu-item" @click="handleAboutClick">
+          <i class="icon icon-about"></i>
+          <span class="menu-item-text">About</span>
+        </li>
       </ul>
     </div>
 
@@ -150,7 +162,7 @@ export default {
   .menu {
     position: absolute;
     bottom: 35px;
-    left: 3px;
+    left: 5px;
 
     .menu-list {
       list-style-type: none;
@@ -164,9 +176,42 @@ export default {
       .menu-item {
         height: 30px;
         line-height: 30px;
-        padding: 0 15px;
+        padding: 0 12px;
         font-size: 12px;
         cursor: pointer;
+
+        .menu-item-text {
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        .icon {
+          display: inline-block;
+          vertical-align: middle;
+          width: 11px;
+          height: 11px;
+          background-size: 100% 100%;
+          background-position: center;
+          background-repeat: no-repeat;
+          margin-right: 7px;
+          opacity: .6;
+        }
+
+        .icon-export {
+          background-image: url('../../assets/images/icon/icon-export.svg');
+        }
+
+        .icon-import {
+          background-image: url('../../assets/images/icon/icon-import.svg');
+        }
+
+        .icon-regedit {
+          background-image: url('../../assets/images/icon/icon-regedit.svg');
+        }
+
+        .icon-about {
+          background-image: url('../../assets/images/icon/icon-about.svg');
+        }
 
         &:hover {
           color: rgba(255, 255, 255, 1);
@@ -211,7 +256,6 @@ export default {
           }
         }
       }
-
     }
   }
 }
