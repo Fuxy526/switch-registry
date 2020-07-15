@@ -13,6 +13,7 @@
     <div class="menu" v-show="showMenu">
       <ul class="menu-list">
         <li class="menu-item" @click="$emit('rename')">rename</li>
+        <li class="menu-item" @click="$emit('duplicate')">duplicate</li>
         <li class="menu-item" @click="$emit('delete')">delete</li>
       </ul>
     </div>

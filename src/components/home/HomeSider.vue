@@ -31,6 +31,7 @@
             @click.native="handleItemClick(item)"
             @openChange="v => handleItemOpenChange(item, v)"
             @rename="renameModalVisible = true"
+            @duplicate="handleDuplicate(item)"
             @delete="handleDelete(item)"
           />
         </slick-item>
@@ -247,6 +248,17 @@ export default {
     handleRename() {
       this.$emit('rename', this.renameName);
       this.renameModalVisible = false;
+    },
+
+    handleDuplicate(item) {
+      this.addName = item.name + ' copy';
+      this.addKeyName = item.key_name;
+      this.addValueName = item.value_name;
+      this.addDefaultType = item.default_type;
+      this.addDefaultData = item.default_data;
+      this.addTargetType = item.target_type;
+      this.addTargetData = item.target_data;
+      this.addModalVisible = true;
     },
 
     handleDelete(item) {
