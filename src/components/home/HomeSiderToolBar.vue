@@ -9,18 +9,20 @@
 
     <div class="menu" v-show="showMenu">
       <ul class="menu-list">
-        <li class="menu-item" @click="handleExportClick">
-          <i class="icon icon-export"></i>
-          <span class="menu-item-text">Export</span>
-        </li>
         <li class="menu-item" @click="handleImportClick">
           <i class="icon icon-import"></i>
           <span class="menu-item-text">Import</span>
         </li>
+        <li class="menu-item" @click="handleExportClick">
+          <i class="icon icon-export"></i>
+          <span class="menu-item-text">Export</span>
+        </li>
+        <div class="divider"></div>
         <li class="menu-item" @click="handleRegeditClick">
           <i class="icon icon-regedit"></i>
           <span class="menu-item-text">Regedit</span>
         </li>
+        <div class="divider"></div>
         <li class="menu-item" @click="handleAboutClick">
           <i class="icon icon-about"></i>
           <span class="menu-item-text">About</span>
@@ -30,20 +32,26 @@
 
     <modal
       class="about-modal"
-      title="About"
       skin="switch-registry"
       cancelText=""
       :width="360"
       :visible="aboutModalVisible"
+      :header="null"
       :footer="null"
       @onCancel="aboutModalVisible = false"
     >
       <div class="about-modal-wrapper">
-        <div class="about-item">Version: {{ version }}</div>
-        <div class="about-item">Author: {{ author }}</div>
-        <div class="about-footer">
-          <div class="link" @click="handleCheckUpdate">Check update</div>
-          <button class="ok-btn" @click="aboutModalVisible = false">OK</button>
+        <div class="logo"></div>
+        <div class="about-content">
+          <div class="name">SwitchRegistry</div>
+          <div class="version">v{{ version }}</div>
+          <div class="author">
+            <span class="link" @click="handleAuthorClick">Fuxy526</span>
+          </div>
+          <div class="links">
+            <span class="link" @click="handleSourceCodeClick">Source code</span>
+            <span class="link" @click="handleCheckUpdate">Check update</span>
+          </div>
         </div>
       </div>
     </modal>
@@ -53,7 +61,7 @@
 <script>
 import { remote, shell } from 'electron';
 import registry from '../../utils/registry';
-import { version, author } from '../../../package.json';
+import { version } from '../../../package.json';
 
 export default {
   name: 'HomeSiderToolBar',
@@ -62,7 +70,6 @@ export default {
     return {
       showMenu: false,
       version: version,
-      author: author,
       aboutModalVisible: false,
     };
   },
@@ -102,6 +109,14 @@ export default {
 
     handleAboutClick() {
       this.aboutModalVisible = true;
+    },
+
+    handleAuthorClick() {
+      shell.openExternal('https://github.com/Fuxy526');
+    },
+
+    handleSourceCodeClick() {
+      shell.openExternal('https://github.com/Fuxy526/switch-registry');
     },
 
     handleCheckUpdate() {
@@ -170,13 +185,18 @@ export default {
       padding: 0;
       background-color: #024D56;
       color: rgba(255, 255, 255, .8);
-      width: 100px;
+      min-width: 100px;
       border-radius: 2px;
+
+      .divider {
+        height: 1px;
+        background-color: rgba(255, 255, 255, .1);
+      }
 
       .menu-item {
         height: 30px;
         line-height: 30px;
-        padding: 0 12px;
+        padding: 0 15px 0 12px;
         font-size: 12px;
         cursor: pointer;
 
@@ -223,36 +243,53 @@ export default {
 
   .about-modal {
     .about-modal-wrapper {
-      .about-item {
-        font-size: 13px;
-        line-height: 22px;
+      .logo {
+        margin: 0 auto 10px;
+        width: 70px;
+        height: 70px;
+        background-image: url('/favicon.ico');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
       }
 
-      .about-footer {
-        margin-top: 15px;
+      .about-content {
+        text-align: center;
+        font-size: 12px;
+        line-height: 20px;
+        color: #64748B;
 
-        .link {
-          display: inline-block;
-          color: #036672;
-          text-decoration: underline;
+        .name {
           font-size: 13px;
-          cursor: pointer;
+          font-weight: bold;
         }
 
-        .ok-btn {
-          height: 30px;
-          font-size: 13px;
-          min-width: 50px;
-          background-color: #036672;
-          color: #fff;
-          outline: none;
-          border: 0;
-          cursor: pointer;
-          border-radius: 2px;
-          float: right;
+        .author {
+          .link {
+            display: inline-block;
+            color: #036672;
+            text-decoration: underline;
+            cursor: pointer;
+          }
+        }
+
+        .links {
+          padding: 10px 0 15px;
+
+          .link {
+            display: inline-block;
+            color: #036672;
+            text-decoration: underline;
+            font-size: 13px;
+            cursor: pointer;
+            margin: 0 8px;
+          }
+        }
+
+        .link {
+          opacity: .9;
 
           &:hover {
-            opacity: .9;
+            opacity: 1;
           }
         }
       }
