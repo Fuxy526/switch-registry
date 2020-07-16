@@ -1,6 +1,6 @@
 {
   "name": "switch-registry",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Switch registry on windows.",
   "author": "Fuxy526<261867120@qq.com>",
   "private": true,
