@@ -9,6 +9,13 @@ module.exports = {
     electronBuilder: {
       builderOptions: {
         productName: 'SwitchRegistry',
+        artifactName: '${productName}-${version}.${ext}',
+        win: {
+          target: ['nsis', 'zip'],
+        },
+        nsis: {
+          artifactName: '${productName}-Setup-${version}.${ext}',
+        },
       },
     },
   },
