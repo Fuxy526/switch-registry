@@ -10,3 +10,10 @@
 - Sync registry status from system
 - Auto renew registy type & data from system
 - Dragsort registry list
+
+## v1.1.0
+
+- Duplicate registry
+- Sync registry status after import
+- Add menu icons
+- Update about modal
